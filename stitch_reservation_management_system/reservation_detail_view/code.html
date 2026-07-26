@@ -1,0 +1,352 @@
+<!DOCTYPE html><html class="h-full" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Reservation Detail - MediRec Pro</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Courier+Prime:wght@400&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#93000a",
+                        "secondary-fixed-dim": "#c9c6c1",
+                        "inverse-primary": "#a4c9ff",
+                        "on-error": "#ffffff",
+                        "status-info-bg": "#E1F5EE",
+                        "surface-variant": "#e2e3e1",
+                        "on-tertiary-fixed-variant": "#474745",
+                        "on-secondary-fixed": "#1c1c19",
+                        "status-confirmed-bg": "#EAF3DE",
+                        "secondary-fixed": "#e5e2dd",
+                        "primary": "#004782",
+                        "surface-bright": "#f9f9f7",
+                        "on-background": "#1a1c1b",
+                        "brand-muted": "#E6F1FB",
+                        "tertiary-fixed": "#e5e2e0",
+                        "surface-container-low": "#f4f4f2",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#5f5e5a",
+                        "status-cancelled-text": "#A32D2D",
+                        "error": "#ba1a1a",
+                        "surface": "#f9f9f7",
+                        "on-secondary-fixed-variant": "#474743",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#5e5d5c",
+                        "surface-container": "#eeeeec",
+                        "outline-variant": "#c2c6d2",
+                        "primary-fixed-dim": "#a4c9ff",
+                        "status-confirmed-text": "#3B6D11",
+                        "surface-dim": "#dadad8",
+                        "status-cancelled-bg": "#FCEBEB",
+                        "tertiary-fixed-dim": "#c9c6c4",
+                        "on-primary-container": "#c1d9ff",
+                        "secondary-container": "#e2dfda",
+                        "status-info-text": "#0F6E56",
+                        "background": "#f9f9f7",
+                        "surface-container-high": "#e8e8e6",
+                        "on-primary-fixed-variant": "#004883",
+                        "on-tertiary-container": "#d9d7d4",
+                        "surface-tint": "#1960a6",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#185fa5",
+                        "on-secondary-container": "#64635e",
+                        "on-secondary": "#ffffff",
+                        "inverse-on-surface": "#f1f1ef",
+                        "status-pending-text": "#854F0B",
+                        "on-tertiary-fixed": "#1c1c1a",
+                        "on-primary-fixed": "#001c39",
+                        "on-surface": "#1a1c1b",
+                        "inverse-surface": "#2f3130",
+                        "on-surface-variant": "#424751",
+                        "surface-container-highest": "#e2e3e1",
+                        "primary-fixed": "#d4e3ff",
+                        "on-primary": "#ffffff",
+                        "status-pending-bg": "#FAEEDA",
+                        "outline": "#727782",
+                        "tertiary": "#464644"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "grid-gap": "14px",
+                        "item-gap": "10px",
+                        "sidebar-w": "230px",
+                        "card-px": "20px",
+                        "app-padding": "20px",
+                        "card-py": "16px",
+                        "row-gap": "12px",
+                        "sidebar-w-collapsed": "56px"
+                    },
+                    "fontFamily": {
+                        "body": ["Inter"],
+                        "metadata": ["Inter"],
+                        "stat-value": ["Inter"],
+                        "detail-name": ["Inter"],
+                        "ui-small": ["Inter"],
+                        "topbar-title": ["Inter"],
+                        "label-badge": ["Inter"],
+                        "micro": ["Inter"],
+                        "mono": ["Courier Prime"]
+                    },
+                    "fontSize": {
+                        "body": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "metadata": ["11px", { "lineHeight": "14px", "fontWeight": "500" }],
+                        "stat-value": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "detail-name": ["17px", { "lineHeight": "24px", "fontWeight": "700" }],
+                        "ui-small": ["13px", { "lineHeight": "18px", "fontWeight": "500" }],
+                        "topbar-title": ["15px", { "lineHeight": "20px", "fontWeight": "600" }],
+                        "label-badge": ["12px", { "lineHeight": "16px", "fontWeight": "600" }],
+                        "micro": ["10px", { "lineHeight": "12px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "mono": ["12px", { "lineHeight": "16px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Thin scrollbar for lists */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c2c6d2;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #727782;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body text-body h-full flex overflow-hidden">
+<!-- TopNavBar -->
+<header class="fixed bg-surface dark:bg-background docked full-width top-0 border-b-[0.5px] border-outline-variant flat no shadows flex justify-between items-center h-16 px-app-padding ml-sidebar w-[calc(100%-theme(spacing.sidebar-w))] z-20">
+<div class="flex items-center gap-4">
+<h1 class="font-topbar-title text-topbar-title font-bold text-primary dark:text-primary-fixed-dim">MediRec Pro</h1>
+<!-- Search Bar placeholder -->
+<div class="relative ml-8">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-ui-small">search</span>
+<input class="pl-9 pr-4 py-1.5 rounded-full border-[0.5px] border-outline-variant bg-surface-container-lowest text-ui-small font-ui-small focus:border-primary focus:ring-2 focus:ring-primary/12 focus:outline-none w-64 transition-all" placeholder="Search records..." type="text">
+</div>
+</div>
+<div class="flex items-center gap-item-gap">
+<button class="p-2 rounded-full hover:bg-surface-container transition-colors text-secondary" title="notifications">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 rounded-full hover:bg-surface-container transition-colors text-secondary" title="help_outline">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<button class="bg-primary text-on-primary font-label-badge text-label-badge px-4 py-2 rounded border-[0.5px] border-primary hover:bg-primary-container hover:text-on-primary-container active:scale-[0.98] transition-all">
+                Check-in Patient
+            </button>
+<div class="w-8 h-8 rounded-full overflow-hidden ml-2 border-[0.5px] border-outline-variant">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A small, professional headshot of a healthcare administrator in a bright, modern clinical setting. Light colors, professional lighting, conveying competence and trust. 50-100 words." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaoYcAZzj-v5_IvRYFE3KN_Cfa7f0DUZlLdloTO7sUR0piCqprluKzXl0WT0x7og-S6YucGNDtb9asW3mv1_3Gv8c5QkCdeduzuWFSf2ED8f-QGWzmPLjPnUDtz2L5wacmxJjRWWumTMYaJT57DxTOTkJRJC5quEYLT7LjQi-EB-IvKegggRWUG25ecb21Qc_j2-ogl5A4zzxWbvJTAyHqUF4CM4JQaF0hpRt44_nLNGIdjdfnP4n0qv3N4l5F8-hx1sQfyscE3so">
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<nav class="bg-surface-container-lowest dark:bg-surface-dim fixed h-full w-sidebar left-0 top-0 border-r-[0.5px] border-outline-variant flat no shadows flex flex-col h-full py-app-padding z-30">
+<div class="px-app-padding mb-8 flex flex-col gap-1">
+<div class="w-10 h-10 rounded mb-2 overflow-hidden bg-brand-muted flex items-center justify-center text-primary">
+<span class="material-symbols-outlined fill-icon">local_hospital</span>
+</div>
+<h2 class="font-topbar-title text-topbar-title text-primary dark:text-primary-fixed-dim">MediRec Pro</h2>
+<span class="font-metadata text-metadata text-secondary">Reservation System</span>
+</div>
+<div class="flex-1 px-4 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors active:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="font-ui-small text-ui-small">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors active:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">calendar_today</span>
+<span class="font-ui-small text-ui-small">Calendar</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-primary dark:text-primary-fixed-dim font-bold border-r-2 border-primary hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors active:scale-[0.98] duration-200 bg-brand-muted/30" href="#">
+<span class="material-symbols-outlined text-[20px] fill-icon">event_note</span>
+<span class="font-ui-small text-ui-small">Appointments</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors active:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="font-ui-small text-ui-small">Settings</span>
+</a>
+</div>
+<div class="px-app-padding mt-auto">
+<button class="w-full bg-surface-container-lowest text-primary border-[0.5px] border-outline-variant font-label-badge text-label-badge py-2 rounded hover:bg-brand-muted transition-colors active:scale-[0.98] flex justify-center items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                New Appointment
+            </button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="ml-sidebar pt-16 w-full h-full overflow-y-auto bg-[#f1f0ec]">
+<div class="max-w-6xl mx-auto p-app-padding grid grid-cols-12 gap-grid-gap">
+<!-- Breadcrumb & Header (Full width) -->
+<div class="col-span-12 mb-2 flex justify-between items-end">
+<div>
+<div class="flex items-center gap-2 text-secondary font-ui-small text-ui-small mb-1">
+<a class="hover:text-primary hover:underline" href="#">Appointments</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-on-surface">RES-8829-K</span>
+</div>
+<h2 class="font-detail-name text-detail-name text-on-surface flex items-center gap-3">
+                        Reservation Details
+                        <span class="bg-status-pending-bg text-status-pending-text px-2 py-0.5 rounded-full font-label-badge text-[10px] border-[0.5px] border-status-pending-text/20">Pending Confirmation</span>
+</h2>
+</div>
+<div class="flex gap-2">
+<button class="px-4 py-2 rounded border-[0.5px] border-outline-variant bg-surface-container-lowest text-error font-label-badge text-label-badge hover:bg-error-container hover:text-on-error-container active:scale-[0.98] transition-all">Cancel</button>
+<button class="px-4 py-2 rounded border-[0.5px] border-primary bg-surface-container-lowest text-primary font-label-badge text-label-badge hover:bg-brand-muted active:scale-[0.98] transition-all">Reschedule</button>
+<button class="px-4 py-2 rounded border-[0.5px] border-primary bg-primary text-on-primary font-label-badge text-label-badge hover:bg-primary-container hover:text-on-primary-container active:scale-[0.98] transition-all">Confirm Appointment</button>
+</div>
+</div>
+<!-- Left Column: Patient & Info (8 cols) -->
+<div class="col-span-12 lg:col-span-8 flex flex-col gap-grid-gap">
+<!-- Patient Card -->
+<div class="bg-surface-container-lowest rounded-lg border-[0.5px] border-outline-variant p-card-px flex flex-col gap-4">
+<div class="flex justify-between items-start border-b-[0.5px] border-outline-variant pb-3">
+<div class="flex items-center gap-4">
+<div class="w-14 h-14 rounded-full border-[0.5px] border-outline-variant overflow-hidden bg-surface-container">
+<img alt="Patient Photo" class="w-full h-full object-cover" data-alt="A neutral, professional portrait of a male patient in his 40s. Shot against a light grey background with soft studio lighting. Corporate/medical style, clear focus. 50-100 words." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAv_XmPCUnwlEffyVdP25DnvXTBumNTSsUjav2w5Wx7O-hvrmZxgRIMqECTmFCgvTTUFiIufnjQzLxmZRBy3GNkwCnKkm226RaDbkBP7_d1QB_hZreFb4XSMytZXh_rPty3iHHMgPduinjfku10cTBY22CWQ9DacD_wuOlE9gnUMSbLAHxhJHTIEE-gQNQtRzFwIgh1ie2T6gqC7nmwtYhLEh5AvsTMrUavX8BfTiFuPvi7fe9ESsVc0ulRWh89K15aHIPyWr3R2uI">
+</div>
+<div>
+<h3 class="font-detail-name text-detail-name text-on-surface">Robert J. MacMillan</h3>
+<div class="flex items-center gap-3 text-secondary font-ui-small text-ui-small mt-1">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">cake</span> DOB: 11/14/1978 (45)</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">badge</span> MRN: 90210-44</span>
+</div>
+</div>
+</div>
+<button class="text-primary hover:bg-brand-muted p-1.5 rounded transition-colors" title="View Full Profile">
+<span class="material-symbols-outlined text-[20px]">open_in_new</span>
+</button>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-1">
+<div>
+<span class="block font-metadata text-metadata text-secondary mb-1 uppercase tracking-wider">Contact</span>
+<span class="block font-ui-small text-ui-small text-on-surface">(555) 867-5309</span>
+</div>
+<div>
+<span class="block font-metadata text-metadata text-secondary mb-1 uppercase tracking-wider">Insurance</span>
+<span class="block font-ui-small text-ui-small text-on-surface">BlueCross PPO</span>
+</div>
+<div>
+<span class="block font-metadata text-metadata text-secondary mb-1 uppercase tracking-wider">Preferred Comm</span>
+<span class="block font-ui-small text-ui-small text-on-surface">SMS / Text</span>
+</div>
+<div>
+<span class="block font-metadata text-metadata text-secondary mb-1 uppercase tracking-wider">Last Visit</span>
+<span class="block font-ui-small text-ui-small text-on-surface">Oct 12, 2023</span>
+</div>
+</div>
+</div>
+<!-- Appointment Details Bento -->
+<div class="grid grid-cols-2 gap-grid-gap">
+<div class="bg-surface-container-lowest rounded-lg border-[0.5px] border-outline-variant p-card-px flex flex-col">
+<div class="flex items-center gap-2 mb-4 text-primary">
+<span class="material-symbols-outlined">schedule</span>
+<h4 class="font-topbar-title text-topbar-title">Timing</h4>
+</div>
+<div class="mb-4">
+<span class="block font-stat-value text-stat-value text-on-surface mb-1">Nov 28, 2023</span>
+<span class="block font-detail-name text-detail-name text-secondary">10:00 AM - 10:45 AM</span>
+</div>
+<div class="mt-auto pt-4 border-t-[0.5px] border-outline-variant">
+<span class="block font-metadata text-metadata text-secondary mb-1">Duration</span>
+<span class="block font-ui-small text-ui-small">45 Minutes (Standard Consult)</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-lg border-[0.5px] border-outline-variant p-card-px flex flex-col">
+<div class="flex items-center gap-2 mb-4 text-primary">
+<span class="material-symbols-outlined">medical_services</span>
+<h4 class="font-topbar-title text-topbar-title">Service Details</h4>
+</div>
+<div class="mb-4">
+<span class="block font-stat-value text-stat-value text-on-surface text-[18px] mb-1">Cardiology Consult</span>
+<span class="block font-ui-small text-ui-small text-secondary">Follow-up: Hypertension Management</span>
+</div>
+<div class="mt-auto pt-4 border-t-[0.5px] border-outline-variant">
+<span class="block font-metadata text-metadata text-secondary mb-1">Provider</span>
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-brand-muted text-primary flex items-center justify-center text-[10px] font-bold">SM</div>
+<span class="font-ui-small text-ui-small">Dr. Sarah Mitchell, MD</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Physician Notes -->
+<div class="bg-surface-container-lowest rounded-lg border-[0.5px] border-outline-variant p-card-px">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-2 text-on-surface">
+<span class="material-symbols-outlined text-secondary">edit_note</span>
+<h4 class="font-topbar-title text-topbar-title">Pre-visit Notes</h4>
+</div>
+<button class="text-primary font-ui-small text-ui-small hover:underline">Edit Notes</button>
+</div>
+<div class="bg-surface p-4 rounded border-[0.5px] border-surface-variant font-body text-body text-on-surface-variant leading-relaxed">
+                        Patient returning for 6-month checkup regarding dosage adjustment for Lisinopril. Please ensure recent bloodwork (lipid panel, metabolic) results from Quest are uploaded to chart prior to consultation. Patient noted occasional dizziness upon standing during last phone triage.
+                    </div>
+</div>
+</div>
+<!-- Right Column: Timeline & Meta (4 cols) -->
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-grid-gap">
+<!-- Room / Location -->
+<div class="bg-secondary rounded-lg border-[0.5px] border-outline-variant p-card-px text-on-secondary">
+<h4 class="font-metadata text-metadata text-on-secondary/80 uppercase tracking-wider mb-2">Location Assignment</h4>
+<div class="flex items-center gap-3 mb-1">
+<span class="material-symbols-outlined text-[24px]">meeting_room</span>
+<span class="font-stat-value text-stat-value">Exam Room 3</span>
+</div>
+<span class="font-ui-small text-ui-small text-on-secondary/80 pl-9 block">West Wing, 2nd Floor</span>
+</div>
+<!-- Action Required -->
+<div class="bg-status-pending-bg rounded-lg border-[0.5px] border-status-pending-text/30 p-card-px">
+<h4 class="font-topbar-title text-topbar-title text-status-pending-text flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined">warning</span>
+                        Action Required
+                    </h4>
+<p class="font-ui-small text-ui-small text-status-pending-text/80 mb-3">Intake forms have not been completed by the patient. Send reminder?</p>
+<button class="bg-surface-container-lowest text-status-pending-text border-[0.5px] border-status-pending-text/50 font-label-badge text-label-badge px-3 py-1.5 rounded hover:bg-surface-bright active:scale-[0.98] transition-all">Send SMS Reminder</button>
+</div>
+<!-- Reservation Timeline -->
+<div class="bg-surface-container-lowest rounded-lg border-[0.5px] border-outline-variant p-card-px flex-1">
+<h4 class="font-topbar-title text-topbar-title text-on-surface mb-4">Activity Log</h4>
+<div class="relative pl-4 border-l-[0.5px] border-outline-variant ml-2 flex flex-col gap-6">
+<div class="relative">
+<div class="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full bg-status-pending-text ring-4 ring-surface-container-lowest"></div>
+<span class="block font-metadata text-metadata text-secondary mb-0.5">Today, 08:14 AM</span>
+<span class="block font-ui-small text-ui-small text-on-surface">Automated reminder sent to patient via SMS.</span>
+</div>
+<div class="relative">
+<div class="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full bg-surface-variant ring-4 ring-surface-container-lowest"></div>
+<span class="block font-metadata text-metadata text-secondary mb-0.5">Nov 14, 2023, 14:32 PM</span>
+<span class="block font-ui-small text-ui-small text-on-surface">Appointment requested by patient via Web Portal.</span>
+</div>
+<div class="relative">
+<div class="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full bg-surface-variant ring-4 ring-surface-container-lowest"></div>
+<span class="block font-metadata text-metadata text-secondary mb-0.5">Nov 14, 2023, 14:32 PM</span>
+<span class="block font-ui-small text-ui-small text-on-surface">System matched request to Dr. Mitchell's availability.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

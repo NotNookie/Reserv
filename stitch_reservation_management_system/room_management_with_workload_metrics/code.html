@@ -1,0 +1,486 @@
+<!DOCTYPE html><html class="h-full bg-surface-container-low dark:bg-background" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>MediRec Pro - Room Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Courier+Prime:wght@400;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-surface": "#1a1c1b",
+                      "status-cancelled-text": "#A32D2D",
+                      "secondary-container": "#e2dfda",
+                      "status-info-text": "#0F6E56",
+                      "tertiary-fixed": "#e5e2e0",
+                      "status-confirmed-bg": "#EAF3DE",
+                      "on-tertiary-fixed-variant": "#474745",
+                      "on-primary-fixed-variant": "#004883",
+                      "on-primary-container": "#c1d9ff",
+                      "surface-container": "#eeeeec",
+                      "on-tertiary": "#ffffff",
+                      "inverse-on-surface": "#f1f1ef",
+                      "on-tertiary-fixed": "#1c1c1a",
+                      "on-secondary-fixed-variant": "#474743",
+                      "surface-variant": "#e2e3e1",
+                      "status-pending-bg": "#FAEEDA",
+                      "surface-container-highest": "#e2e3e1",
+                      "primary": "#004782",
+                      "status-info-bg": "#E1F5EE",
+                      "secondary": "#5f5e5a",
+                      "primary-fixed-dim": "#a4c9ff",
+                      "tertiary": "#464644",
+                      "status-pending-text": "#854F0B",
+                      "tertiary-container": "#5e5d5c",
+                      "primary-container": "#185fa5",
+                      "background": "#f9f9f7",
+                      "error-container": "#ffdad6",
+                      "error": "#ba1a1a",
+                      "status-cancelled-bg": "#FCEBEB",
+                      "outline-variant": "#c2c6d2",
+                      "on-error": "#ffffff",
+                      "surface-container-lowest": "#ffffff",
+                      "outline": "#727782",
+                      "surface-bright": "#f9f9f7",
+                      "surface-tint": "#1960a6",
+                      "inverse-surface": "#2f3130",
+                      "on-secondary-container": "#64635e",
+                      "on-secondary": "#ffffff",
+                      "surface-dim": "#dadad8",
+                      "surface-container-low": "#f4f4f2",
+                      "tertiary-fixed-dim": "#c9c6c4",
+                      "on-secondary-fixed": "#1c1c19",
+                      "on-primary": "#ffffff",
+                      "on-primary-fixed": "#001c39",
+                      "inverse-primary": "#a4c9ff",
+                      "on-background": "#1a1c1b",
+                      "surface": "#f9f9f7",
+                      "on-surface-variant": "#424751",
+                      "primary-fixed": "#d4e3ff",
+                      "secondary-fixed-dim": "#c9c6c1",
+                      "secondary-fixed": "#e5e2dd",
+                      "brand-muted": "#E6F1FB",
+                      "on-error-container": "#93000a",
+                      "surface-container-high": "#e8e8e6",
+                      "status-confirmed-text": "#3B6D11",
+                      "on-tertiary-container": "#d9d7d4"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "sidebar-w": "230px",
+                      "grid-gap": "14px",
+                      "card-py": "16px",
+                      "app-padding": "20px",
+                      "sidebar-w-collapsed": "56px",
+                      "card-px": "20px",
+                      "item-gap": "10px",
+                      "row-gap": "12px"
+              },
+              "fontFamily": {
+                      "detail-name": [
+                              "Inter"
+                      ],
+                      "ui-small": [
+                              "Inter"
+                      ],
+                      "body": [
+                              "Inter"
+                      ],
+                      "micro": [
+                              "Inter"
+                      ],
+                      "topbar-title": [
+                              "Inter"
+                      ],
+                      "label-badge": [
+                              "Inter"
+                      ],
+                      "mono": [
+                              "Courier Prime"
+                      ],
+                      "metadata": [
+                              "Inter"
+                      ],
+                      "stat-value": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "detail-name": [
+                              "17px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "ui-small": [
+                              "13px",
+                              {
+                                      "lineHeight": "18px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "micro": [
+                              "10px",
+                              {
+                                      "lineHeight": "12px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "topbar-title": [
+                              "15px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-badge": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "mono": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "metadata": [
+                              "11px",
+                              {
+                                      "lineHeight": "14px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "stat-value": [
+                              "22px",
+                              {
+                                      "lineHeight": "28px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+            }
+          }
+        }
+      </script>
+<style>
+        .material-symbols-outlined {
+          font-variation-settings:
+          'FILL' 0,
+          'wght' 400,
+          'GRAD' 0,
+          'opsz' 24
+        }
+      </style>
+</head>
+<body class="font-body text-body text-on-surface antialiased bg-surface-container-lowest dark:bg-surface-dim h-screen overflow-hidden flex">
+<!-- SideNavBar -->
+<nav class="hidden md:flex bg-surface-container-lowest dark:bg-surface-dim font-body text-body fixed h-full w-sidebar left-0 top-0 border-r-[0.5px] border-outline-variant flex-col py-app-padding">
+<div class="px-app-padding mb-8 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">medical_services</span>
+</div>
+<div>
+<h1 class="font-topbar-title text-topbar-title text-primary dark:text-primary-fixed-dim font-bold">MediRec Pro</h1>
+<p class="font-metadata text-metadata text-secondary">Reservation System</p>
+</div>
+</div>
+<div class="px-app-padding mb-6">
+<button class="w-full bg-primary text-on-primary py-2 px-4 rounded hover:bg-primary-container transition-colors font-label-badge text-label-badge flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                New Appointment
+            </button>
+</div>
+<ul class="flex flex-col gap-1 px-3 flex-grow">
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors active:scale-[0.98] transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+                    Dashboard
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors active:scale-[0.98] transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+                    Calendar
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-primary dark:text-primary-fixed-dim font-bold border-r-2 border-primary bg-brand-muted/30 hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors active:scale-[0.98] transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">event_note</span>
+                    Appointments
+                </a>
+</li>
+<li class="mt-auto">
+<a class="flex items-center gap-3 px-3 py-2 rounded text-secondary dark:text-secondary-fixed-dim hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors active:scale-[0.98] transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+                    Settings
+                </a>
+</li>
+</ul>
+<div class="px-app-padding mt-4 flex items-center gap-3 pt-4 border-t-[0.5px] border-outline-variant">
+<img class="w-10 h-10 rounded-full object-cover border-[0.5px] border-outline" data-alt="A professional headshot of a female clinic administrator with warm lighting, wearing a white coat, against a neutral light grey background. High resolution, corporate modern aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJ5ce6yf2bYLipBiw9WBPj6YvvfyrDqIMmwCwtIBiQOTH7LPk3OON2Gghiu9fewOTnRADPsH3pFowzHKDYxE9vHzj5HWJ_ONO5rDnjetoN8-XhAK7hUZYUACiZxn8xE8U_rwbGjQhHTVJSeRCgwP85yAr7cdbFSfNDuACvXnt1Lce7gi3dF4osLIRjNDmxLSTPKOopucob08eUO6PEoQVvISP65zXCVTP__QPiNS-S5ucY8tBMaWa-scibM2Les4_AK-FfZ1ttILI">
+<div>
+<p class="font-ui-small text-ui-small font-medium text-on-surface">Admin User</p>
+<p class="font-metadata text-metadata text-secondary">Clinic Administrator</p>
+</div>
+</div>
+</nav>
+<!-- Main Content Wrapper -->
+<div class="flex flex-col flex-grow ml-sidebar w-[calc(100%-theme(spacing.sidebar-w)-300px)] h-full overflow-hidden bg-background">
+<!-- TopNavBar -->
+<header class="bg-surface dark:bg-background font-topbar-title text-topbar-title text-primary dark:text-primary-fixed-dim docked full-width top-0 border-b-[0.5px] border-outline-variant flex justify-between items-center h-16 px-app-padding shrink-0 z-10">
+<div class="flex items-center gap-4 flex-grow max-w-md">
+<!-- search_bar: on_left -->
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-secondary text-[20px]">search</span>
+<input class="w-full pl-10 pr-4 py-1.5 bg-surface-container-lowest border-[0.5px] border-outline-variant rounded-lg font-body text-body focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all text-on-surface" placeholder="Search patients, doctors..." type="text">
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-8 h-8 flex items-center justify-center rounded-full text-secondary hover:text-primary hover:bg-surface-container transition-colors active:scale-[0.98]">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-full text-secondary hover:text-primary hover:bg-surface-container transition-colors active:scale-[0.98]">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<div class="h-6 w-[1px] bg-outline-variant mx-2"></div>
+<button class="bg-primary-container text-on-primary-container px-4 py-1.5 rounded-lg font-label-badge text-label-badge hover:bg-primary hover:text-on-primary transition-colors border-[0.5px] border-primary-container">
+                    Check-in Patient
+                </button>
+</div>
+</header>
+<!-- Page Canvas -->
+<main class="flex-grow p-app-padding overflow-y-auto">
+<!-- Header & Summary -->
+<div class="flex justify-between items-end mb-6">
+<div>
+<h2 class="font-detail-name text-detail-name text-on-surface">Room Management</h2>
+<p class="font-body text-body text-secondary mt-1">Monitor and manage clinical space allocation.</p>
+</div>
+<!-- Filters -->
+<div class="flex gap-2">
+<button class="px-3 py-1.5 bg-surface-container-lowest border-[0.5px] border-primary text-primary rounded-lg font-ui-small text-ui-small shadow-sm">All Rooms</button>
+<button class="px-3 py-1.5 bg-surface-container-lowest border-[0.5px] border-outline-variant text-secondary rounded-lg font-ui-small text-ui-small hover:bg-surface-container transition-colors">General</button>
+<button class="px-3 py-1.5 bg-surface-container-lowest border-[0.5px] border-outline-variant text-secondary rounded-lg font-ui-small text-ui-small hover:bg-surface-container transition-colors">Specialty</button>
+<button class="px-3 py-1.5 bg-surface-container-lowest border-[0.5px] border-outline-variant text-secondary rounded-lg font-ui-small text-ui-small hover:bg-surface-container transition-colors">Lab</button>
+</div>
+</div>
+<!-- Stats Bar -->
+<div class="grid grid-cols-3 gap-grid-gap mb-6">
+<div class="bg-surface-container-lowest border-[0.5px] border-outline-variant rounded-lg p-card-py px-card-px flex items-center gap-4 shadow-sm">
+<div class="w-12 h-12 rounded-full bg-primary-container/10 flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[24px]">meeting_room</span>
+</div>
+<div>
+<p class="font-metadata text-metadata text-secondary uppercase tracking-wider">Total Rooms</p>
+<p class="font-stat-value text-stat-value text-on-surface">24</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest border-[0.5px] border-outline-variant rounded-lg p-card-py px-card-px flex items-center gap-4 shadow-sm">
+<div class="w-12 h-12 rounded-full bg-error-container/30 flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-[24px]">person_filled</span>
+</div>
+<div>
+<p class="font-metadata text-metadata text-secondary uppercase tracking-wider">Currently Occupied</p>
+<p class="font-stat-value text-stat-value text-on-surface">14</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest border-[0.5px] border-outline-variant rounded-lg p-card-py px-card-px flex items-center gap-4 shadow-sm">
+<div class="w-12 h-12 rounded-full bg-status-pending-bg flex items-center justify-center text-status-pending-text">
+<span class="material-symbols-outlined text-[24px]">hourglass_empty</span>
+</div>
+<div>
+<p class="font-metadata text-metadata text-secondary uppercase tracking-wider">Waitlist Count</p>
+<p class="font-stat-value text-stat-value text-on-surface">6</p>
+</div>
+</div>
+</div>
+<!-- Room Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-grid-gap">
+<!-- Room Card 1 - Occupied -->
+<div class="bg-surface-container-lowest border-[0.5px] border-outline-variant rounded-lg overflow-hidden flex flex-col shadow-sm">
+<div class="p-card-px border-b-[0.5px] border-outline-variant flex justify-between items-start bg-brand-muted/20">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-secondary text-[18px]">meeting_room</span>
+<h3 class="font-detail-name text-detail-name text-on-surface">Room 101</h3>
+</div>
+<p class="font-metadata text-metadata text-secondary">General Exam</p>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-badge text-label-badge border-[0.5px] border-error-container/50">Occupied</span>
+</div>
+<div class="p-card-px flex-grow flex flex-col gap-row-gap">
+<div class="grid grid-cols-2 gap-2 text-sm">
+<div>
+<p class="font-metadata text-metadata text-secondary">Patient</p>
+<p class="font-ui-small text-ui-small text-on-surface">Maria Reyes</p>
+</div>
+<div>
+<p class="font-metadata text-metadata text-secondary">Physician</p>
+<p class="font-ui-small text-ui-small text-on-surface">Dr. Santos</p>
+</div>
+</div>
+<div class="flex items-center gap-2 mt-2 bg-surface-container-low p-2 rounded border-[0.5px] border-outline-variant/50">
+<span class="material-symbols-outlined text-secondary text-[16px]">timer</span>
+<span class="font-mono text-mono text-on-surface font-bold text-primary">00:42:15</span>
+<span class="font-micro text-micro text-secondary ml-auto">Duration</span>
+</div>
+</div>
+<div class="p-3 bg-surface-container-lowest border-t-[0.5px] border-outline-variant flex gap-2">
+<button class="flex-1 py-1.5 px-3 border-[0.5px] border-outline-variant rounded font-label-badge text-label-badge text-primary hover:bg-surface-container transition-colors active:scale-[0.98]">Release Room</button>
+</div>
+</div>
+<!-- Room Card 2 - Available -->
+<div class="bg-surface-container-lowest border-[0.5px] border-outline-variant rounded-lg overflow-hidden flex flex-col shadow-sm">
+<div class="p-card-px border-b-[0.5px] border-outline-variant flex justify-between items-start">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-secondary text-[18px]">meeting_room</span>
+<h3 class="font-detail-name text-detail-name text-on-surface">Room 102</h3>
+</div>
+<p class="font-metadata text-metadata text-secondary">General Exam</p>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-status-confirmed-bg text-status-confirmed-text font-label-badge text-label-badge border-[0.5px] border-status-confirmed-text/20">Available</span>
+</div>
+<div class="p-card-px flex-grow flex flex-col items-center justify-center text-center py-8">
+<span class="material-symbols-outlined text-outline-variant text-[40px] mb-2 font-light">check_circle</span>
+<p class="font-ui-small text-ui-small text-secondary">Ready for next patient</p>
+</div>
+<div class="p-3 bg-surface-container-lowest border-t-[0.5px] border-outline-variant flex gap-2">
+<button class="flex-1 py-1.5 px-3 bg-primary text-on-primary rounded font-label-badge text-label-badge hover:bg-primary-container transition-colors active:scale-[0.98]">Assign Patient</button>
+</div>
+</div>
+<!-- Room Card 3 - Cleaning -->
+<div class="bg-surface-container-lowest border-[0.5px] border-outline-variant rounded-lg overflow-hidden flex flex-col shadow-sm">
+<div class="p-card-px border-b-[0.5px] border-outline-variant flex justify-between items-start bg-status-pending-bg/30">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-secondary text-[18px]">favorite</span>
+<h3 class="font-detail-name text-detail-name text-on-surface">Cardio Suite</h3>
+</div>
+<p class="font-metadata text-metadata text-secondary">Specialty</p>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-status-pending-bg text-status-pending-text font-label-badge text-label-badge border-[0.5px] border-status-pending-text/20">Cleaning</span>
+</div>
+<div class="p-card-px flex-grow flex flex-col items-center justify-center text-center py-6">
+<div class="w-12 h-12 rounded-full border-2 border-status-pending-text border-t-transparent animate-spin mb-3"></div>
+<p class="font-ui-small text-ui-small text-secondary">Sanitization in progress</p>
+<p class="font-metadata text-metadata text-secondary mt-1">Est. 5 mins remaining</p>
+</div>
+<div class="p-3 bg-surface-container-lowest border-t-[0.5px] border-outline-variant flex gap-2">
+<button class="flex-1 py-1.5 px-3 border-[0.5px] border-outline-variant rounded font-label-badge text-label-badge text-secondary hover:bg-surface-container transition-colors active:scale-[0.98] opacity-50 cursor-not-allowed">Assign Patient</button>
+</div>
+</div>
+<!-- Room Card 4 - Available -->
+<div class="bg-surface-container-lowest border-[0.5px] border-outline-variant rounded-lg overflow-hidden flex flex-col shadow-sm">
+<div class="p-card-px border-b-[0.5px] border-outline-variant flex justify-between items-start">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-secondary text-[18px]">science</span>
+<h3 class="font-detail-name text-detail-name text-on-surface">Lab A</h3>
+</div>
+<p class="font-metadata text-metadata text-secondary">Diagnostics</p>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-status-confirmed-bg text-status-confirmed-text font-label-badge text-label-badge border-[0.5px] border-status-confirmed-text/20">Available</span>
+</div>
+<div class="p-card-px flex-grow flex flex-col items-center justify-center text-center py-8">
+<span class="material-symbols-outlined text-outline-variant text-[40px] mb-2 font-light">check_circle</span>
+<p class="font-ui-small text-ui-small text-secondary">Ready for next patient</p>
+</div>
+<div class="p-3 bg-surface-container-lowest border-t-[0.5px] border-outline-variant flex gap-2">
+<button class="flex-1 py-1.5 px-3 bg-primary text-on-primary rounded font-label-badge text-label-badge hover:bg-primary-container transition-colors active:scale-[0.98]">Assign Patient</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+<aside class="w-[300px] h-full bg-surface-container-low border-l-[0.5px] border-outline-variant flex flex-col shrink-0 overflow-hidden">
+<div class="p-app-padding border-b-[0.5px] border-outline-variant">
+<h2 class="font-detail-name text-detail-name text-on-surface mb-3">Staff on Duty</h2>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-secondary text-[18px]">search</span>
+<input class="w-full pl-9 pr-3 py-1.5 bg-surface-container-lowest border-[0.5px] border-outline-variant rounded-lg font-body text-ui-small focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all" placeholder="Filter staff..." type="text">
+</div>
+<div class="mt-4 p-3 bg-primary-container/10 rounded-lg border-[0.5px] border-primary-container/20"><div class="flex justify-between items-center mb-1"><span class="font-metadata text-metadata text-primary">Clinic Utilization</span><span class="font-ui-small text-ui-small font-bold text-primary">85%</span></div><div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden"><div class="bg-primary h-full w-[85%]"></div></div><p class="font-micro text-micro text-secondary mt-2 uppercase">High Demand Period</p></div></div>
+<div class="flex-grow overflow-y-auto p-app-padding flex flex-col gap-6">
+<section>
+<h3 class="font-micro text-micro text-secondary uppercase tracking-wider mb-3">Physicians</h3>
+<div class="flex flex-col gap-3">
+<div class="bg-surface-container-lowest p-3 rounded-lg border-[0.5px] border-outline-variant shadow-sm flex items-center gap-3">
+<img alt="Dr. Santos" class="w-10 h-10 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AL9X-Y_X_X_X">
+<div class="flex-grow">
+<p class="font-ui-small text-ui-small font-bold text-on-surface">Dr. Santos</p>
+<p class="font-metadata text-metadata text-secondary">Internal Medicine</p>
+<div class="flex items-center gap-1 mt-1">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span class="font-micro text-micro text-error">With Patient</span>
+</div>
+</div>
+<div class="flex flex-col gap-1 min-w-[80px] text-right mr-2"><div class="flex flex-col"><span class="font-micro text-micro text-secondary uppercase">Patients</span><span class="font-ui-small text-ui-small font-bold text-on-surface">12</span></div><div class="flex flex-col"><span class="font-micro text-micro text-secondary uppercase">Wait</span><span class="font-ui-small text-ui-small text-error font-bold">15m</span></div><div class="w-full bg-surface-container-highest h-1 rounded-full mt-1"><div class="bg-error h-full w-[90%]"></div></div></div><button class="text-primary hover:bg-primary-container/10 p-1 rounded transition-colors">
+<span class="material-symbols-outlined text-[20px]">drag_indicator</span>
+</button>
+</div>
+<div class="bg-surface-container-lowest p-3 rounded-lg border-[0.5px] border-outline-variant shadow-sm flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary font-bold">LC</div>
+<div class="flex-grow">
+<p class="font-ui-small text-ui-small font-bold text-on-surface">Dr. Chen</p>
+<p class="font-metadata text-metadata text-secondary">Cardiology</p>
+<div class="flex items-center gap-1 mt-1">
+<span class="w-2 h-2 rounded-full bg-status-confirmed-text"></span>
+<span class="font-micro text-micro text-status-confirmed-text">Available</span>
+</div>
+</div>
+<div class="flex flex-col gap-1 min-w-[80px] text-right mr-2"><div class="flex flex-col"><span class="font-micro text-micro text-secondary uppercase">Patients</span><span class="font-ui-small text-ui-small font-bold text-on-surface">8</span></div><div class="flex flex-col"><span class="font-micro text-micro text-secondary uppercase">Wait</span><span class="font-ui-small text-ui-small text-status-confirmed-text font-bold">5m</span></div><div class="w-full bg-surface-container-highest h-1 rounded-full mt-1"><div class="bg-status-confirmed-text h-full w-[40%]"></div></div></div><button class="text-primary hover:bg-primary-container/10 p-1 rounded transition-colors">
+<span class="material-symbols-outlined text-[20px]">drag_indicator</span>
+</button>
+</div>
+</div>
+</section>
+<section>
+<h3 class="font-micro text-micro text-secondary uppercase tracking-wider mb-3">Nurses</h3>
+<div class="flex flex-col gap-3">
+<div class="bg-surface-container-lowest p-3 rounded-lg border-[0.5px] border-outline-variant shadow-sm flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-secondary font-bold">JM</div>
+<div class="flex-grow">
+<p class="font-ui-small text-ui-small font-bold text-on-surface">Jordan Miller</p>
+<p class="font-metadata text-metadata text-secondary">Triage</p>
+<div class="flex items-center gap-1 mt-1">
+<span class="w-2 h-2 rounded-full bg-status-pending-text"></span>
+<span class="font-micro text-micro text-status-pending-text">On Break</span>
+</div>
+</div>
+<div class="flex flex-col gap-1 min-w-[80px] text-right mr-2"><div class="flex flex-col"><span class="font-micro text-micro text-secondary uppercase">Triage</span><span class="font-ui-small text-ui-small font-bold text-on-surface">18</span></div><div class="flex flex-col"><span class="font-micro text-micro text-secondary uppercase">Wait</span><span class="font-ui-small text-ui-small text-status-pending-text font-bold">--</span></div><div class="w-full bg-surface-container-highest h-1 rounded-full mt-1"><div class="bg-status-pending-text h-full w-[0%]"></div></div></div><button class="text-primary hover:bg-primary-container/10 p-1 rounded transition-colors">
+<span class="material-symbols-outlined text-[20px]">drag_indicator</span>
+</button>
+</div>
+</div>
+</section>
+</div>
+<div class="p-app-padding border-t-[0.5px] border-outline-variant">
+<button class="w-full py-2 border-[0.5px] border-primary text-primary rounded-lg font-label-badge text-label-badge hover:bg-primary-container/10 transition-colors">
+      Manage Schedule
+    </button>
+</div>
+</aside></body></html>

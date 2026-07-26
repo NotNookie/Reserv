@@ -1,0 +1,1120 @@
+bash
+
+cat > /mnt/user-data/outputs/MediRec_Pro.html << 'HTMLEOF'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MediRec Pro — Medical Records Management</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f7f7f5;
+  --color-bg-tertiary: #f1f0ec;
+  --color-text-primary: #1a1a18;
+  --color-text-secondary: #5f5e5a;
+  --color-text-tertiary: #888780;
+  --color-border-tertiary: rgba(0,0,0,0.10);
+  --color-border-secondary: rgba(0,0,0,0.20);
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg-primary: #1e1e1c;
+    --color-bg-secondary: #2a2a27;
+    --color-bg-tertiary: #141413;
+    --color-text-primary: #f0ede8;
+    --color-text-secondary: #b4b2a9;
+    --color-text-tertiary: #888780;
+    --color-border-tertiary: rgba(255,255,255,0.10);
+    --color-border-secondary: rgba(255,255,255,0.18);
+  }
+}
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: var(--color-text-primary); background: var(--color-bg-tertiary); font-size: 14px; }
+.app { display: flex; height: 100vh; overflow: hidden; }
+
+/* SIDEBAR */
+.sidebar { width: 230px; background: var(--color-bg-primary); border-right: 0.5px solid var(--color-border-tertiary); display: flex; flex-direction: column; flex-shrink: 0; overflow-y: auto; }
+.sidebar-logo { padding: 18px 16px 14px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.logo-row { display: flex; align-items: center; gap: 10px; }
+.logo-icon { width: 32px; height: 32px; background: #185FA5; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+.logo-icon i { color: white; font-size: 17px; }
+.logo-title { font-size: 14px; font-weight: 600; color: var(--color-text-primary); }
+.logo-sub { font-size: 11px; color: var(--color-text-secondary); margin-top: 1px; }
+.nav-section { padding: 14px 16px 4px; font-size: 10px; font-weight: 600; color: var(--color-text-tertiary); letter-spacing: 0.6px; text-transform: uppercase; }
+.nav-item { display: flex; align-items: center; gap: 10px; padding: 8px 12px; margin: 1px 8px; border-radius: var(--radius-md); cursor: pointer; font-size: 13px; color: var(--color-text-secondary); transition: background 0.12s; user-select: none; }
+.nav-item:hover { background: var(--color-bg-secondary); color: var(--color-text-primary); }
+.nav-item.active { background: #E6F1FB; color: #185FA5; font-weight: 500; }
+.nav-item i { font-size: 17px; }
+.sidebar-footer { margin-top: auto; padding: 10px 8px; border-top: 0.5px solid var(--color-border-tertiary); }
+
+/* MAIN */
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
+.topbar { background: var(--color-bg-primary); border-bottom: 0.5px solid var(--color-border-tertiary); padding: 11px 20px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+.topbar-title { font-size: 15px; font-weight: 600; }
+.topbar-actions { display: flex; gap: 8px; align-items: center; }
+.content { flex: 1; overflow-y: auto; padding: 20px; background: var(--color-bg-tertiary); }
+
+/* BUTTONS */
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: var(--radius-md); border: 0.5px solid var(--color-border-secondary); background: transparent; font-size: 13px; cursor: pointer; color: var(--color-text-primary); font-family: inherit; transition: background 0.12s; }
+.btn:hover { background: var(--color-bg-secondary); }
+.btn:active { transform: scale(0.98); }
+.btn-primary { background: #185FA5; color: white; border-color: #185FA5; }
+.btn-primary:hover { background: #0C447C; border-color: #0C447C; }
+.btn-sm { padding: 5px 10px; font-size: 12px; }
+.btn-danger { background: #FCEBEB; color: #A32D2D; border-color: #F7C1C1; }
+.btn-danger:hover { background: #F7C1C1; }
+
+/* CARDS */
+.card { background: var(--color-bg-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--radius-lg); padding: 16px 20px; margin-bottom: 14px; }
+.card-title { font-size: 12px; font-weight: 600; color: var(--color-text-secondary); margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.4px; display: flex; align-items: center; justify-content: space-between; }
+
+/* GRIDS */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+.grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+
+/* STAT CARDS */
+.stat-card { background: var(--color-bg-secondary); border-radius: var(--radius-md); padding: 12px 14px; }
+.stat-label { font-size: 11px; color: var(--color-text-secondary); margin-bottom: 4px; font-weight: 500; }
+.stat-value { font-size: 22px; font-weight: 600; line-height: 1.2; }
+.stat-sub { font-size: 11px; color: var(--color-text-tertiary); margin-top: 3px; }
+
+/* FORMS */
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.form-row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.form-row4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.form-group { display: flex; flex-direction: column; gap: 5px; }
+.form-group label { font-size: 12px; color: var(--color-text-secondary); font-weight: 500; }
+.form-group input, .form-group select, .form-group textarea {
+  padding: 8px 10px; border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--radius-md); background: var(--color-bg-primary);
+  color: var(--color-text-primary); font-size: 13px; font-family: inherit;
+  transition: border-color 0.12s;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  outline: none; border-color: #185FA5; box-shadow: 0 0 0 3px rgba(24,95,165,0.12);
+}
+.form-group textarea { resize: vertical; min-height: 72px; line-height: 1.5; }
+
+/* BADGES */
+.badge { display: inline-flex; align-items: center; padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 500; white-space: nowrap; }
+.badge-blue { background: #E6F1FB; color: #185FA5; }
+.badge-green { background: #EAF3DE; color: #3B6D11; }
+.badge-amber { background: #FAEEDA; color: #854F0B; }
+.badge-red { background: #FCEBEB; color: #A32D2D; }
+.badge-purple { background: #EEEDFE; color: #534AB7; }
+.badge-gray { background: #F1EFE8; color: #5F5E5A; }
+.badge-teal { background: #E1F5EE; color: #0F6E56; }
+
+/* TABLES */
+.table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.table th { text-align: left; padding: 8px 12px; font-size: 11px; font-weight: 600; color: var(--color-text-secondary); border-bottom: 0.5px solid var(--color-border-tertiary); white-space: nowrap; }
+.table td { padding: 9px 12px; border-bottom: 0.5px solid var(--color-border-tertiary); vertical-align: middle; }
+.table tr:last-child td { border-bottom: none; }
+.table tbody tr:hover td { background: var(--color-bg-secondary); }
+
+/* AVATAR */
+.avatar { width: 34px; height: 34px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; flex-shrink: 0; }
+.avatar-blue { background: #E6F1FB; color: #185FA5; }
+.avatar-teal { background: #E1F5EE; color: #0F6E56; }
+.avatar-purple { background: #EEEDFE; color: #534AB7; }
+.avatar-coral { background: #FAECE7; color: #993C1D; }
+.avatar-green { background: #EAF3DE; color: #3B6D11; }
+
+/* TABS */
+.tabs { display: flex; gap: 2px; border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 16px; overflow-x: auto; }
+.tab { padding: 9px 16px; font-size: 13px; cursor: pointer; color: var(--color-text-secondary); border-bottom: 2px solid transparent; margin-bottom: -0.5px; white-space: nowrap; transition: color 0.12s; user-select: none; }
+.tab.active { color: #185FA5; border-bottom-color: #185FA5; font-weight: 500; }
+.tab:hover { color: var(--color-text-primary); }
+
+/* MISC */
+.divider { height: 0.5px; background: var(--color-border-tertiary); margin: 14px 0; }
+.note-box { background: #FAEEDA; border-radius: var(--radius-md); padding: 10px 14px; font-size: 12px; color: #854F0B; margin-bottom: 14px; display: flex; align-items: flex-start; gap: 8px; }
+.note-box-red { background: #FCEBEB; color: #A32D2D; }
+.progress-bar { height: 5px; background: var(--color-bg-secondary); border-radius: 3px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 3px; }
+.section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.section-title { font-size: 14px; font-weight: 600; }
+.page { display: none; }
+.page.active { display: block; }
+.pt-tab { display: none; }
+.pt-tab.active { display: block; }
+.card-nop { background: var(--color-bg-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--radius-lg); margin-bottom: 14px; overflow: hidden; }
+.card-nop-head { padding: 12px 16px 10px; font-size: 12px; font-weight: 600; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.4px; border-bottom: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: space-between; }
+.chip { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 6px; font-size: 11px; border: 0.5px solid var(--color-border-tertiary); color: var(--color-text-secondary); margin: 2px; cursor: pointer; }
+.chip.selected { background: #E6F1FB; color: #185FA5; border-color: #B5D4F4; }
+.vitals-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.vital-card { background: var(--color-bg-secondary); border-radius: var(--radius-md); padding: 10px 12px; }
+.vital-label { font-size: 10px; color: var(--color-text-secondary); font-weight: 500; margin-bottom: 2px; }
+.vital-val { font-size: 18px; font-weight: 600; }
+.vital-unit { font-size: 11px; color: var(--color-text-tertiary); margin-top: 1px; }
+.tag-row { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+
+/* MODAL */
+.modal-bg { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 1000; align-items: center; justify-content: center; }
+.modal-bg.open { display: flex; }
+.modal { background: var(--color-bg-primary); border-radius: var(--radius-lg); border: 0.5px solid var(--color-border-tertiary); width: 520px; max-width: 95vw; max-height: 90vh; overflow-y: auto; }
+.modal-head { padding: 16px 20px; border-bottom: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: space-between; }
+.modal-head h3 { font-size: 14px; font-weight: 600; }
+.modal-body { padding: 20px; }
+.modal-foot { padding: 12px 20px; border-top: 0.5px solid var(--color-border-tertiary); display: flex; justify-content: flex-end; gap: 8px; }
+
+/* SEARCH */
+.search-bar { display: flex; align-items: center; gap: 10px; padding: 9px 14px; background: var(--color-bg-primary); border-radius: var(--radius-md); margin-bottom: 14px; border: 0.5px solid var(--color-border-secondary); }
+.search-bar input { border: none; background: transparent; font-size: 13px; flex: 1; color: var(--color-text-primary); font-family: inherit; outline: none; }
+.search-bar input::placeholder { color: var(--color-text-tertiary); }
+
+/* TOAST */
+.toast { position: fixed; bottom: 24px; right: 24px; background: #185FA5; color: white; padding: 10px 18px; border-radius: var(--radius-md); font-size: 13px; z-index: 9999; opacity: 0; transition: opacity 0.3s; pointer-events: none; display: flex; align-items: center; gap: 8px; }
+.toast.show { opacity: 1; }
+
+@media (max-width: 900px) {
+  .grid4 { grid-template-columns: 1fr 1fr; }
+  .grid3 { grid-template-columns: 1fr 1fr; }
+  .form-row3, .form-row4 { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  .sidebar { width: 56px; }
+  .nav-item span, .logo-title, .logo-sub, .nav-section { display: none; }
+  .grid2, .grid3, .grid4 { grid-template-columns: 1fr; }
+  .form-row, .form-row3, .form-row4 { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"><i class="ti ti-check"></i> <span id="toast-msg">Saved successfully</span></div>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modal-bg" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <div class="modal-head">
+      <h3 id="modal-title">Modal</h3>
+      <button class="btn btn-sm" onclick="closeModalDirect()"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-foot" id="modal-foot"></div>
+  </div>
+</div>
+
+<div class="app">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-row">
+        <div class="logo-icon"><i class="ti ti-heart-pulse"></i></div>
+        <div>
+          <div class="logo-title">MediRec Pro</div>
+          <div class="logo-sub">Medical Records System</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-section">Main</div>
+    <div class="nav-item active" onclick="showPage('dashboard',this)"><i class="ti ti-layout-dashboard"></i><span>Dashboard</span></div>
+    <div class="nav-item" onclick="showPage('patients',this)"><i class="ti ti-users"></i><span>Patients</span></div>
+
+    <div class="nav-section">Clinical</div>
+    <div class="nav-item" onclick="showPage('visits',this)"><i class="ti ti-stethoscope"></i><span>Check-up Visits</span></div>
+    <div class="nav-item" onclick="showPage('labs',this)"><i class="ti ti-microscope"></i><span>Laboratories</span></div>
+    <div class="nav-item" onclick="showPage('medicines',this)"><i class="ti ti-pill"></i><span>Medicines</span></div>
+    <div class="nav-item" onclick="showPage('diagnostics',this)"><i class="ti ti-activity"></i><span>Diagnostics</span></div>
+
+    <div class="nav-section">Finance</div>
+    <div class="nav-item" onclick="showPage('payments',this)"><i class="ti ti-cash"></i><span>Payments</span></div>
+    <div class="nav-item" onclick="showPage('promissory',this)"><i class="ti ti-file-invoice"></i><span>Promissory Notes</span></div>
+    <div class="nav-item" onclick="showPage('hmo',this)"><i class="ti ti-shield-check"></i><span>HMO / Insurance</span></div>
+
+    <div class="nav-section">Admin</div>
+    <div class="nav-item" onclick="showPage('physicians',this)"><i class="ti ti-user-circle"></i><span>Physicians</span></div>
+
+    <div class="sidebar-footer">
+      <div class="nav-item" onclick="showPage('settings',this)"><i class="ti ti-settings"></i><span>Settings</span></div>
+    </div>
+  </div>
+
+  <!-- MAIN AREA -->
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title" id="page-title">Dashboard</div>
+      <div class="topbar-actions">
+        <button class="btn btn-sm" onclick="openNewPatientModal()"><i class="ti ti-user-plus"></i> New Patient</button>
+        <button class="btn btn-primary btn-sm" onclick="showPage('patients', document.querySelectorAll(\'.nav-item\')[1])"><i class="ti ti-search"></i> Find Patient</button>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- ======================== DASHBOARD ======================== -->
+      <div class="page active" id="page-dashboard">
+        <div class="grid4" style="margin-bottom:16px;">
+          <div class="stat-card"><div class="stat-label">Total Patients</div><div class="stat-value">1,284</div><div class="stat-sub">? 12 registered this week</div></div>
+          <div class="stat-card"><div class="stat-label">Today's Visits</div><div class="stat-value" style="color:#185FA5;">24</div><div class="stat-sub">8 still pending</div></div>
+          <div class="stat-card"><div class="stat-label">Pending Labs</div><div class="stat-value" style="color:#854F0B;">17</div><div class="stat-sub">3 marked urgent</div></div>
+          <div class="stat-card"><div class="stat-label">Total Receivables</div><div class="stat-value" style="color:#3B6D11;">?84,200</div><div class="stat-sub">12 open invoices</div></div>
+        </div>
+        <div class="grid2">
+          <div class="card-nop">
+            <div class="card-nop-head">Recent Check-up Visits</div>
+            <table class="table">
+              <thead><tr><th>Patient</th><th>Physician</th><th>Date</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td><div style="display:flex;align-items:center;gap:8px;"><div class="avatar avatar-blue">MR</div>Maria Reyes</div></td><td>Dr. Santos</td><td>Jun 20</td><td><span class="badge badge-green">Done</span></td></tr>
+                <tr><td><div style="display:flex;align-items:center;gap:8px;"><div class="avatar avatar-teal">JC</div>Juan Cruz</div></td><td>Dr. Lim</td><td>Jun 19</td><td><span class="badge badge-amber">In Progress</span></td></tr>
+                <tr><td><div style="display:flex;align-items:center;gap:8px;"><div class="avatar avatar-purple">AC</div>Ana Campos</div></td><td>Dr. Santos</td><td>Jun 25</td><td><span class="badge badge-blue">Scheduled</span></td></tr>
+                <tr><td><div style="display:flex;align-items:center;gap:8px;"><div class="avatar avatar-coral">RP</div>Ramon Perez</div></td><td>Dr. Garcia</td><td>Jun 22</td><td><span class="badge badge-red">Cancelled</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card-nop">
+            <div class="card-nop-head">Pending Lab Results</div>
+            <table class="table">
+              <thead><tr><th>Patient</th><th>Test</th><th>Priority</th></tr></thead>
+              <tbody>
+                <tr><td>Maria Reyes</td><td>CBC + Urinalysis</td><td><span class="badge badge-red">Urgent</span></td></tr>
+                <tr><td>Juan Cruz</td><td>Lipid Panel</td><td><span class="badge badge-amber">Routine</span></td></tr>
+                <tr><td>Ana Campos</td><td>TSH</td><td><span class="badge badge-amber">Routine</span></td></tr>
+                <tr><td>Lisa Torres</td><td>Blood Glucose</td><td><span class="badge badge-red">Urgent</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="card">
+            <div class="card-title">Payment Summary</div>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;"><span>Cash</span><span style="font-weight:600;">?42,500</span></div><div class="progress-bar"><div class="progress-fill" style="width:70%;background:#185FA5;"></div></div></div>
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;"><span>HMO Claims</span><span style="font-weight:600;">?31,200</span></div><div class="progress-bar"><div class="progress-fill" style="width:52%;background:#0F6E56;"></div></div></div>
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;"><span>Promissory Notes</span><span style="font-weight:600;">?10,500</span></div><div class="progress-bar"><div class="progress-fill" style="width:18%;background:#854F0B;"></div></div></div>
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;"><span>Card / GCash / Maya</span><span style="font-weight:600;">?18,900</span></div><div class="progress-bar"><div class="progress-fill" style="width:32%;background:#534AB7;"></div></div></div>
+            </div>
+          </div>
+          <div class="card-nop">
+            <div class="card-nop-head">Active Physicians</div>
+            <table class="table">
+              <thead><tr><th>Physician</th><th>Specialty</th><th>Patients</th></tr></thead>
+              <tbody>
+                <tr><td><div style="display:flex;align-items:center;gap:8px;"><div class="avatar avatar-blue">ES</div>Dr. Santos</div></td><td>Internal Med</td><td>48</td></tr>
+                <tr><td><div style="display:flex;align-items:center;gap:8px;"><div class="avatar avatar-teal">JL</div>Dr. Lim</div></td><td>Cardiology</td><td>35</td></tr>
+                <tr><td><div style="display:flex;align-items:center;gap:8px;"><div class="avatar avatar-purple">RG</div>Dr. Garcia</div></td><td>Pediatrics</td><td>61</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================== PATIENTS ======================== -->
+      <div class="page" id="page-patients">
+        <div style="display:flex;gap:10px;margin-bottom:14px;">
+          <div class="search-bar" style="flex:1;margin-bottom:0;">
+            <i class="ti ti-search" style="color:var(--color-text-tertiary);font-size:16px;"></i>
+            <input type="text" id="pt-search" placeholder="Search by name, ID, or contact..." oninput="filterPatients()">
+          </div>
+          <button class="btn btn-primary" onclick="openNewPatientModal()"><i class="ti ti-user-plus"></i> New Patient</button>
+        </div>
+        <div class="card-nop">
+          <table class="table" id="pt-table">
+            <thead><tr><th>Patient</th><th>ID</th><th>Date of Birth</th><th>Age/Sex</th><th>Contact</th><th>HMO</th><th>Physician</th><th>Status</th><th></th></tr></thead>
+            <tbody id="pt-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ======================== PATIENT DETAIL ======================== -->
+      <div class="page" id="page-patient-detail">
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;background:var(--color-bg-primary);border-radius:var(--radius-lg);border:0.5px solid var(--color-border-tertiary);padding:16px 20px;">
+          <div class="avatar avatar-blue" id="detail-avatar" style="width:52px;height:52px;font-size:18px;font-weight:700;">MR</div>
+          <div style="flex:1;">
+            <div style="font-size:17px;font-weight:700;" id="detail-name">Maria Reyes</div>
+            <div style="font-size:12px;color:var(--color-text-secondary);margin:2px 0;" id="detail-meta">PT-00124 · Female, 42 yrs · Mar 12, 1983</div>
+            <div id="detail-badges" style="margin-top:5px;display:flex;gap:6px;flex-wrap:wrap;"></div>
+          </div>
+          <button class="btn btn-sm" onclick="openEditPatientModal()"><i class="ti ti-edit"></i> Edit</button>
+          <button class="btn btn-sm btn-danger" onclick="showToast('Record printed')"><i class="ti ti-printer"></i> Print</button>
+        </div>
+        <div class="tabs">
+          <div class="tab active" onclick="switchTab(this,'pt-info')"><i class="ti ti-id-badge" style="margin-right:4px;"></i>Info</div>
+          <div class="tab" onclick="switchTab(this,'pt-visits')"><i class="ti ti-stethoscope" style="margin-right:4px;"></i>Visits</div>
+          <div class="tab" onclick="switchTab(this,'pt-labs')"><i class="ti ti-microscope" style="margin-right:4px;"></i>Labs</div>
+          <div class="tab" onclick="switchTab(this,'pt-meds')"><i class="ti ti-pill" style="margin-right:4px;"></i>Medicines</div>
+          <div class="tab" onclick="switchTab(this,'pt-diag')"><i class="ti ti-activity" style="margin-right:4px;"></i>Diagnostics</div>
+          <div class="tab" onclick="switchTab(this,'pt-billing')"><i class="ti ti-cash" style="margin-right:4px;"></i>Billing</div>
+        </div>
+
+        <!-- Info Tab -->
+        <div id="pt-info" class="pt-tab active">
+          <div class="grid2">
+            <div class="card">
+              <div class="card-title">Personal Information</div>
+              <div class="form-row"><div class="form-group"><label>First Name</label><input id="d-fname" value="Maria"></div><div class="form-group"><label>Last Name</label><input id="d-lname" value="Reyes"></div></div>
+              <div class="form-row"><div class="form-group"><label>Date of Birth</label><input type="date" id="d-dob" value="1983-03-12"></div><div class="form-group"><label>Sex</label><select id="d-sex"><option>Female</option><option>Male</option></select></div></div>
+              <div class="form-row"><div class="form-group"><label>Contact Number</label><input id="d-phone" value="09171234567"></div><div class="form-group"><label>Civil Status</label><select id="d-status"><option>Married</option><option>Single</option><option>Widowed</option><option>Separated</option></select></div></div>
+              <div class="form-group" style="margin-bottom:12px;"><label>Complete Address</label><input id="d-addr" value="123 Rizal St., Calamba, Laguna"></div>
+              <div class="form-group" style="margin-bottom:12px;"><label>Email Address</label><input id="d-email" type="email" value="maria.reyes@email.com"></div>
+              <div class="form-row"><div class="form-group"><label>Emergency Contact Name</label><input id="d-econ" value="Pedro Reyes"></div><div class="form-group"><label>Relationship</label><input id="d-erel" value="Spouse"></div></div>
+              <div class="form-group"><label>Emergency Contact No.</label><input id="d-ephone" value="09181234567"></div>
+            </div>
+            <div>
+              <div class="card">
+                <div class="card-title">Medical Background</div>
+                <div class="form-group" style="margin-bottom:10px;"><label>Chief Complaint / Reason for Consultation</label><textarea id="d-cc">Hypertension, Type 2 Diabetes</textarea></div>
+                <div class="form-group" style="margin-bottom:10px;"><label>Past Medical History</label><textarea id="d-pmh">Family history of heart disease. Previous hospitalization 2019 for pneumonia.</textarea></div>
+                <div class="form-group" style="margin-bottom:10px;"><label>Allergies</label><input id="d-allergy" value="Penicillin, Sulfa drugs"></div>
+                <div class="form-group"><label>Blood Type</label><select id="d-btype"><option>O+</option><option>O-</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>Unknown</option></select></div>
+              </div>
+              <div class="card">
+                <div class="card-title">Latest Vital Signs</div>
+                <div class="vitals-grid">
+                  <div class="vital-card"><div class="vital-label">Blood Pressure</div><div class="vital-val">140/90</div><div class="vital-unit">mmHg — Elevated</div></div>
+                  <div class="vital-card"><div class="vital-label">Heart Rate</div><div class="vital-val">82</div><div class="vital-unit">bpm — Normal</div></div>
+                  <div class="vital-card"><div class="vital-label">Temperature</div><div class="vital-val">36.7°</div><div class="vital-unit">Celsius — Normal</div></div>
+                  <div class="vital-card"><div class="vital-label">O2 Saturation</div><div class="vital-val">98%</div><div class="vital-unit">Normal</div></div>
+                  <div class="vital-card"><div class="vital-label">Weight</div><div class="vital-val">72 kg</div><div class="vital-unit">Height: 158 cm</div></div>
+                  <div class="vital-card"><div class="vital-label">BMI</div><div class="vital-val">28.8</div><div class="vital-unit">Overweight</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:4px;"><button class="btn">Cancel</button><button class="btn btn-primary" onclick="showToast('Patient record saved')"><i class="ti ti-device-floppy"></i> Save Record</button></div>
+        </div>
+
+        <!-- Visits Tab -->
+        <div id="pt-visits" class="pt-tab">
+          <div class="section-header"><div class="section-title">Visit History</div><button class="btn btn-primary btn-sm" onclick="openVisitModal()"><i class="ti ti-plus"></i> Log Visit</button></div>
+          <div class="card-nop">
+            <table class="table">
+              <thead><tr><th>Date</th><th>Physician</th><th>Visit Type</th><th>Chief Complaint</th><th>BP</th><th>Notes</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td>Jun 20, 2026</td><td>Dr. Santos</td><td>Follow-up</td><td>Hypertension check</td><td>140/90</td><td>Adjusted Metformin dosage</td><td><span class="badge badge-green">Completed</span></td></tr>
+                <tr><td>May 5, 2026</td><td>Dr. Santos</td><td>Follow-up</td><td>Hypertension follow-up</td><td>148/94</td><td>Added Amlodipine 5mg</td><td><span class="badge badge-green">Completed</span></td></tr>
+                <tr><td>Mar 12, 2026</td><td>Dr. Lim</td><td>Specialist</td><td>Palpitations</td><td>135/88</td><td>ECG ordered — normal sinus rhythm</td><td><span class="badge badge-green">Completed</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Labs Tab -->
+        <div id="pt-labs" class="pt-tab">
+          <div class="section-header"><div class="section-title">Laboratory Results</div><button class="btn btn-primary btn-sm" onclick="openLabModal()"><i class="ti ti-plus"></i> Add Lab Request</button></div>
+          <div class="card-nop">
+            <table class="table">
+              <thead><tr><th>Date</th><th>Test Name</th><th>Result</th><th>Reference Range</th><th>Interpretation</th><th>Physician</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td>Jun 20, 2026</td><td>CBC — Hemoglobin</td><td>12.1 g/dL</td><td>12–16 g/dL</td><td>Low-normal</td><td>Dr. Santos</td><td><span class="badge badge-green">Final</span></td></tr>
+                <tr><td>Jun 20, 2026</td><td>FBS</td><td>7.4 mmol/L</td><td>3.9–5.5 mmol/L</td><td>Elevated</td><td>Dr. Santos</td><td><span class="badge badge-red">Abnormal</span></td></tr>
+                <tr><td>Jun 20, 2026</td><td>HbA1c</td><td>7.8%</td><td>&lt;5.7%</td><td>Uncontrolled DM</td><td>Dr. Santos</td><td><span class="badge badge-red">Abnormal</span></td></tr>
+                <tr><td>May 5, 2026</td><td>Lipid Panel — LDL</td><td>138 mg/dL</td><td>&lt;100 mg/dL</td><td>Borderline high</td><td>Dr. Lim</td><td><span class="badge badge-amber">Borderline</span></td></tr>
+                <tr><td>Mar 12, 2026</td><td>Urinalysis</td><td>No significant findings</td><td>—</td><td>Normal</td><td>Dr. Santos</td><td><span class="badge badge-green">Final</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Medicines Tab -->
+        <div id="pt-meds" class="pt-tab">
+          <div class="section-header"><div class="section-title">Prescribed Medicines</div><button class="btn btn-primary btn-sm" onclick="openMedModal()"><i class="ti ti-plus"></i> New Prescription</button></div>
+          <div class="card-nop">
+            <table class="table">
+              <thead><tr><th>Medicine</th><th>Dosage</th><th>Frequency</th><th>Route</th><th>Duration</th><th>Qty</th><th>Prescribed By</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td style="font-weight:500;">Metformin</td><td>500mg</td><td>Twice daily</td><td>Oral</td><td>Ongoing</td><td>60 tabs</td><td>Dr. Santos</td><td><span class="badge badge-green">Active</span></td></tr>
+                <tr><td style="font-weight:500;">Amlodipine</td><td>5mg</td><td>Once daily</td><td>Oral</td><td>Ongoing</td><td>30 tabs</td><td>Dr. Santos</td><td><span class="badge badge-green">Active</span></td></tr>
+                <tr><td style="font-weight:500;">Atorvastatin</td><td>20mg</td><td>Once nightly</td><td>Oral</td><td>Ongoing</td><td>30 tabs</td><td>Dr. Santos</td><td><span class="badge badge-green">Active</span></td></tr>
+                <tr><td style="font-weight:500;">Aspirin</td><td>80mg</td><td>Once daily</td><td>Oral</td><td>6 months</td><td>30 tabs</td><td>Dr. Lim</td><td><span class="badge badge-amber">Review</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Diagnostics Tab -->
+        <div id="pt-diag" class="pt-tab">
+          <div class="section-header"><div class="section-title">Health Diagnostics</div><button class="btn btn-primary btn-sm" onclick="openDiagModal()"><i class="ti ti-plus"></i> Add Diagnosis</button></div>
+          <div class="card-nop" style="margin-bottom:14px;">
+            <table class="table">
+              <thead><tr><th>ICD-10</th><th>Diagnosis</th><th>Date</th><th>Physician</th><th>Severity</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td style="font-family:monospace;font-size:12px;color:var(--color-text-secondary);">I10</td><td style="font-weight:500;">Essential Hypertension</td><td>Mar 2024</td><td>Dr. Santos</td><td><span class="badge badge-amber">Moderate</span></td><td><span class="badge badge-green">Managed</span></td></tr>
+                <tr><td style="font-family:monospace;font-size:12px;color:var(--color-text-secondary);">E11</td><td style="font-weight:500;">Type 2 Diabetes Mellitus</td><td>Jan 2023</td><td>Dr. Santos</td><td><span class="badge badge-red">Uncontrolled</span></td><td><span class="badge badge-amber">Monitoring</span></td></tr>
+                <tr><td style="font-family:monospace;font-size:12px;color:var(--color-text-secondary);">E78.5</td><td style="font-weight:500;">Hyperlipidemia</td><td>May 2026</td><td>Dr. Lim</td><td><span class="badge badge-amber">Moderate</span></td><td><span class="badge badge-green">Managed</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card">
+            <div class="card-title">SOAP Notes (Latest Entry)</div>
+            <div class="form-row">
+              <div class="form-group"><label>Subjective</label><textarea>Patient reports fatigue and occasional morning dizziness. Compliant with medications.</textarea></div>
+              <div class="form-group"><label>Objective</label><textarea>BP 140/90. FBS 7.4. HbA1c 7.8%. Weight 72kg. No edema noted.</textarea></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Assessment</label><textarea>Hypertension — partially controlled. Type 2 DM — suboptimal control.</textarea></div>
+              <div class="form-group"><label>Plan</label><textarea>Adjust Metformin to 1000mg BID. Refer to dietitian. Repeat HbA1c after 3 months.</textarea></div>
+            </div>
+            <div style="display:flex;justify-content:flex-end;"><button class="btn btn-primary" onclick="showToast('SOAP notes saved')"><i class="ti ti-device-floppy"></i> Save Notes</button></div>
+          </div>
+        </div>
+
+        <!-- Billing Tab -->
+        <div id="pt-billing" class="pt-tab">
+          <div class="grid2">
+            <div>
+              <div class="card">
+                <div class="card-title">Bill Summary</div>
+                <table class="table">
+                  <thead><tr><th>Service / Item</th><th style="text-align:right;">Amount</th></tr></thead>
+                  <tbody>
+                    <tr><td>Consultation Fee</td><td style="text-align:right;">?800.00</td></tr>
+                    <tr><td>Laboratory (CBC, FBS, HbA1c)</td><td style="text-align:right;">?2,100.00</td></tr>
+                    <tr><td>ECG</td><td style="text-align:right;">?450.00</td></tr>
+                    <tr><td style="color:var(--color-text-secondary);">HMO Coverage (PhilHealth)</td><td style="text-align:right;color:#3B6D11;">-?1,200.00</td></tr>
+                  </tbody>
+                </table>
+                <div class="divider"></div>
+                <div style="display:flex;justify-content:space-between;font-weight:700;font-size:15px;"><span>Total Due</span><span>?2,150.00</span></div>
+              </div>
+              <div class="card">
+                <div class="card-title">Payment History</div>
+                <table class="table">
+                  <thead><tr><th>Date</th><th>Method</th><th>Amount</th><th>OR No.</th></tr></thead>
+                  <tbody><tr><td colspan="4" style="color:var(--color-text-tertiary);text-align:center;padding:16px;">No payments posted yet</td></tr></tbody>
+                </table>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-title">Post Payment</div>
+              <div class="form-group" style="margin-bottom:12px;"><label>Payment Method</label>
+                <select>
+                  <option>Cash</option><option>GCash</option><option>Maya</option>
+                  <option>Credit Card</option><option>Debit Card</option>
+                  <option>Bank Transfer</option><option>PhilHealth</option>
+                  <option>HMO Claim</option><option>Promissory Note</option>
+                </select>
+              </div>
+              <div class="form-row">
+                <div class="form-group"><label>Amount Paid (?)</label><input type="number" value="2150"></div>
+                <div class="form-group"><label>Date of Payment</label><input type="date" value="2026-06-25"></div>
+              </div>
+              <div class="form-group" style="margin-bottom:12px;"><label>OR / Reference No.</label><input placeholder="Official receipt or ref number"></div>
+              <div class="form-group" style="margin-bottom:12px;"><label>Remarks</label><input placeholder="Optional notes"></div>
+              <button class="btn btn-primary" style="width:100%;" onclick="showToast('Payment posted successfully')"><i class="ti ti-check"></i> Post Payment</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================== VISITS PAGE ======================== -->
+      <div class="page" id="page-visits">
+        <div class="card">
+          <div class="card-title">Log a Check-up Visit</div>
+          <div class="form-row3">
+            <div class="form-group"><label>Patient</label><select><option>Maria Reyes</option><option>Juan Cruz</option><option>Ana Campos</option><option>Ramon Perez</option></select></div>
+            <div class="form-group"><label>Physician</label><select><option>Dr. Santos</option><option>Dr. Lim</option><option>Dr. Garcia</option></select></div>
+            <div class="form-group"><label>Visit Date & Time</label><input type="datetime-local"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Chief Complaint</label><input placeholder="Reason for visit"></div>
+            <div class="form-group"><label>Visit Type</label><select><option>Routine Check-up</option><option>Follow-up</option><option>Emergency</option><option>Specialist Referral</option><option>Annual Physical Exam</option></select></div>
+          </div>
+          <div class="card-title" style="margin-top:4px;">Vital Signs</div>
+          <div class="form-row4">
+            <div class="form-group"><label>Blood Pressure (mmHg)</label><input placeholder="120/80"></div>
+            <div class="form-group"><label>Heart Rate (bpm)</label><input type="number" placeholder="72"></div>
+            <div class="form-group"><label>Temperature (°C)</label><input type="number" step="0.1" placeholder="36.5"></div>
+            <div class="form-group"><label>O2 Saturation (%)</label><input type="number" placeholder="98"></div>
+          </div>
+          <div class="form-row4">
+            <div class="form-group"><label>Respiratory Rate</label><input type="number" placeholder="16"></div>
+            <div class="form-group"><label>Weight (kg)</label><input type="number" step="0.1" placeholder="60"></div>
+            <div class="form-group"><label>Height (cm)</label><input type="number" placeholder="160"></div>
+            <div class="form-group"><label>BMI (auto)</label><input placeholder="Calculated" readonly style="color:var(--color-text-secondary);"></div>
+          </div>
+          <div class="form-group" style="margin-bottom:12px;"><label>Clinical Notes / Findings</label><textarea placeholder="Physical examination findings, observations..." style="min-height:90px;"></textarea></div>
+          <div style="display:flex;justify-content:flex-end;gap:8px;"><button class="btn">Clear</button><button class="btn btn-primary" onclick="showToast('Visit logged successfully')"><i class="ti ti-device-floppy"></i> Save Visit</button></div>
+        </div>
+        <div class="card-nop">
+          <div class="card-nop-head">All Visit Records</div>
+          <table class="table">
+            <thead><tr><th>Date</th><th>Patient</th><th>Physician</th><th>Type</th><th>BP</th><th>Notes</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>Jun 20, 2026</td><td>Maria Reyes</td><td>Dr. Santos</td><td>Follow-up</td><td>140/90</td><td>Adjusted Metformin</td><td><span class="badge badge-green">Completed</span></td></tr>
+              <tr><td>Jun 19, 2026</td><td>Juan Cruz</td><td>Dr. Lim</td><td>Routine</td><td>135/85</td><td>Lipid panel ordered</td><td><span class="badge badge-amber">Pending</span></td></tr>
+              <tr><td>Jun 18, 2026</td><td>Ana Campos</td><td>Dr. Santos</td><td>Routine</td><td>110/70</td><td>Normal findings</td><td><span class="badge badge-green">Completed</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ======================== LABS PAGE ======================== -->
+      <div class="page" id="page-labs">
+        <div class="card">
+          <div class="card-title">New Lab Request</div>
+          <div class="form-row3">
+            <div class="form-group"><label>Patient</label><select><option>Maria Reyes</option><option>Juan Cruz</option><option>Ana Campos</option></select></div>
+            <div class="form-group"><label>Requesting Physician</label><select><option>Dr. Santos</option><option>Dr. Lim</option><option>Dr. Garcia</option></select></div>
+            <div class="form-group"><label>Priority</label><select><option>Routine</option><option>Urgent</option><option>STAT</option></select></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Request Date</label><input type="date"></div>
+            <div class="form-group"><label>Expected Release</label><input type="date"></div>
+          </div>
+          <div class="form-group" style="margin-bottom:12px;"><label>Tests to Order (select all that apply)</label>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;" id="test-chips">
+              <div class="chip" onclick="toggleChip(this)"><i class="ti ti-circle-check" style="font-size:14px;"></i> CBC</div>
+              <div class="chip" onclick="toggleChip(this)"><i class="ti ti-circle-check" style="font-size:14px;"></i> Urinalysis</div>
+              <div class="chip" onclick="toggleChip(this)"><i class="ti ti-circle-check" style="font-size:14px;"></i> FBS</div>
+              <div class="chip" onclick="toggleChip(this)"><i class="ti ti-circle-check" style="font-size:14px;"></i> HbA1c</div>
+              <div class="chip" onclick="toggleChip(this)"><i class="ti ti-circle-check" style="font-size:14px;"></i> Lipid Panel</div>
+              <div class="chip" onclick="toggleChip(this)"><i class="ti ti-circle-check" style="font-size:14px;"></i> BUN / Creatinine</div>
+              <div class="chip" onclick="toggleChip(this)"><i class="ti ti-circle-check" style="font-size:14px;"></i> SGPT / SGOT</div>
+              <div class="chip" onclick="toggleChip(this)"><i class="ti ti-circle-check" style="font-size:14px;"></i> Uric Acid</div>
+              <div class="chip" onclick="toggleChip(this)"><i class="ti ti-circle-check" style="font-size:14px;"></i> TSH / T3 / T4</div>
+              <div class="chip" onclick="toggleChip(this)"><i class="ti ti-circle-check" style="font-size:14px;"></i> ECG</div>
+              <div class="chip" onclick="toggleChip(this)"><i class="ti ti-circle-check" style="font-size:14px;"></i> Chest X-Ray</div>
+              <div class="chip" onclick="toggleChip(this)"><i class="ti ti-circle-check" style="font-size:14px;"></i> Ultrasound</div>
+              <div class="chip" onclick="toggleChip(this)"><i class="ti ti-circle-check" style="font-size:14px;"></i> 2D Echo</div>
+              <div class="chip" onclick="toggleChip(this)"><i class="ti ti-circle-check" style="font-size:14px;"></i> Pregnancy Test</div>
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom:12px;"><label>Other / Additional Tests</label><input placeholder="Specify any other tests not listed above..."></div>
+          <div style="display:flex;justify-content:flex-end;"><button class="btn btn-primary" onclick="showToast('Lab request submitted')"><i class="ti ti-send"></i> Submit Request</button></div>
+        </div>
+        <div class="card-nop">
+          <div class="card-nop-head">Lab Results Log</div>
+          <table class="table">
+            <thead><tr><th>Date</th><th>Patient</th><th>Test</th><th>Result</th><th>Physician</th><th>Priority</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>Jun 20</td><td>Maria Reyes</td><td>FBS</td><td>7.4 mmol/L</td><td>Dr. Santos</td><td><span class="badge badge-red">Urgent</span></td><td><span class="badge badge-red">Abnormal</span></td></tr>
+              <tr><td>Jun 20</td><td>Maria Reyes</td><td>HbA1c</td><td>7.8%</td><td>Dr. Santos</td><td><span class="badge badge-amber">Routine</span></td><td><span class="badge badge-red">Abnormal</span></td></tr>
+              <tr><td>Jun 19</td><td>Juan Cruz</td><td>Lipid Panel</td><td>LDL 138 mg/dL</td><td>Dr. Lim</td><td><span class="badge badge-amber">Routine</span></td><td><span class="badge badge-amber">Borderline</span></td></tr>
+              <tr><td>Jun 18</td><td>Ana Campos</td><td>TSH</td><td>Pending</td><td>Dr. Santos</td><td><span class="badge badge-amber">Routine</span></td><td><span class="badge badge-blue">Pending</span></td></tr>
+              <tr><td>Jun 15</td><td>Ramon Perez</td><td>CBC</td><td>Normal</td><td>Dr. Garcia</td><td><span class="badge badge-amber">Routine</span></td><td><span class="badge badge-green">Final</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ======================== MEDICINES PAGE ======================== -->
+      <div class="page" id="page-medicines">
+        <div class="card">
+          <div class="card-title">New Prescription</div>
+          <div class="form-row3">
+            <div class="form-group"><label>Patient</label><select><option>Maria Reyes</option><option>Juan Cruz</option><option>Ana Campos</option></select></div>
+            <div class="form-group"><label>Prescribing Physician</label><select><option>Dr. Santos</option><option>Dr. Lim</option><option>Dr. Garcia</option></select></div>
+            <div class="form-group"><label>Prescription Date</label><input type="date"></div>
+          </div>
+          <div class="form-row3">
+            <div class="form-group"><label>Generic / Brand Name</label><input placeholder="e.g. Metformin / Glucophage"></div>
+            <div class="form-group"><label>Dosage Strength</label><input placeholder="e.g. 500mg, 5mg"></div>
+            <div class="form-group"><label>Dosage Form</label><select><option>Tablet</option><option>Capsule</option><option>Syrup</option><option>Injection</option><option>Drops</option><option>Ointment / Cream</option><option>Patch</option></select></div>
+          </div>
+          <div class="form-row4">
+            <div class="form-group"><label>Route</label><select><option>Oral</option><option>IV</option><option>IM</option><option>SC</option><option>Topical</option><option>Sublingual</option><option>Inhalation</option></select></div>
+            <div class="form-group"><label>Frequency</label><select><option>Once daily (OD)</option><option>Twice daily (BID)</option><option>Three times daily (TID)</option><option>Four times daily (QID)</option><option>Every 6 hours (Q6H)</option><option>Every 8 hours (Q8H)</option><option>As needed (PRN)</option><option>At bedtime (HS)</option></select></div>
+            <div class="form-group"><label>Duration</label><input placeholder="e.g. 30 days / Ongoing"></div>
+            <div class="form-group"><label>Qty Dispensed</label><input type="number" placeholder="30"></div>
+          </div>
+          <div class="form-group" style="margin-bottom:12px;"><label>Special Instructions / Precautions</label><input placeholder="e.g. Take with food, avoid alcohol, refrigerate..."></div>
+          <div style="display:flex;justify-content:flex-end;"><button class="btn btn-primary" onclick="showToast('Prescription saved')"><i class="ti ti-device-floppy"></i> Save Prescription</button></div>
+        </div>
+        <div class="card-nop">
+          <div class="card-nop-head">Active Prescriptions</div>
+          <table class="table">
+            <thead><tr><th>Patient</th><th>Medicine</th><th>Dosage</th><th>Frequency</th><th>Route</th><th>Duration</th><th>Physician</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>Maria Reyes</td><td style="font-weight:500;">Metformin 500mg</td><td>500mg</td><td>BID</td><td>Oral</td><td>Ongoing</td><td>Dr. Santos</td><td><span class="badge badge-green">Active</span></td></tr>
+              <tr><td>Maria Reyes</td><td style="font-weight:500;">Amlodipine 5mg</td><td>5mg</td><td>OD</td><td>Oral</td><td>Ongoing</td><td>Dr. Santos</td><td><span class="badge badge-green">Active</span></td></tr>
+              <tr><td>Juan Cruz</td><td style="font-weight:500;">Bisoprolol 5mg</td><td>5mg</td><td>OD</td><td>Oral</td><td>3 months</td><td>Dr. Lim</td><td><span class="badge badge-green">Active</span></td></tr>
+              <tr><td>Ramon Perez</td><td style="font-weight:500;">Amoxicillin 500mg</td><td>500mg</td><td>TID</td><td>Oral</td><td>7 days</td><td>Dr. Garcia</td><td><span class="badge badge-gray">Completed</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ======================== DIAGNOSTICS PAGE ======================== -->
+      <div class="page" id="page-diagnostics">
+        <div class="card">
+          <div class="card-title">Add Health Diagnostic</div>
+          <div class="form-row3">
+            <div class="form-group"><label>Patient</label><select><option>Maria Reyes</option><option>Juan Cruz</option></select></div>
+            <div class="form-group"><label>Physician</label><select><option>Dr. Santos</option><option>Dr. Lim</option></select></div>
+            <div class="form-group"><label>Date of Diagnosis</label><input type="date"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>ICD-10 Code</label><input placeholder="e.g. I10, E11, J18.9"></div>
+            <div class="form-group"><label>Diagnosis / Condition Name</label><input placeholder="e.g. Essential Hypertension"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Severity</label><select><option>Mild</option><option>Moderate</option><option>Severe</option><option>Critical</option></select></div>
+            <div class="form-group"><label>Status</label><select><option>Active</option><option>Managed</option><option>Monitoring</option><option>Resolved</option><option>Chronic</option></select></div>
+          </div>
+          <div class="form-group" style="margin-bottom:12px;"><label>Clinical Basis / Findings</label><textarea placeholder="Basis for diagnosis, test findings, clinical observations..."></textarea></div>
+          <div style="display:flex;justify-content:flex-end;"><button class="btn btn-primary" onclick="showToast('Diagnosis saved')"><i class="ti ti-device-floppy"></i> Save Diagnosis</button></div>
+        </div>
+        <div class="card-nop">
+          <div class="card-nop-head">Diagnostic Records</div>
+          <table class="table">
+            <thead><tr><th>ICD-10</th><th>Diagnosis</th><th>Patient</th><th>Date</th><th>Physician</th><th>Severity</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td style="font-family:monospace;color:var(--color-text-secondary);">I10</td><td style="font-weight:500;">Essential Hypertension</td><td>Maria Reyes</td><td>Mar 2024</td><td>Dr. Santos</td><td><span class="badge badge-amber">Moderate</span></td><td><span class="badge badge-green">Managed</span></td></tr>
+              <tr><td style="font-family:monospace;color:var(--color-text-secondary);">E11</td><td style="font-weight:500;">Type 2 Diabetes Mellitus</td><td>Maria Reyes</td><td>Jan 2023</td><td>Dr. Santos</td><td><span class="badge badge-red">Uncontrolled</span></td><td><span class="badge badge-amber">Monitoring</span></td></tr>
+              <tr><td style="font-family:monospace;color:var(--color-text-secondary);">I25.1</td><td style="font-weight:500;">Coronary Artery Disease</td><td>Juan Cruz</td><td>Apr 2025</td><td>Dr. Lim</td><td><span class="badge badge-red">Severe</span></td><td><span class="badge badge-amber">Monitoring</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ======================== PAYMENTS PAGE ======================== -->
+      <div class="page" id="page-payments">
+        <div class="grid2">
+          <div class="card">
+            <div class="card-title">Record Payment</div>
+            <div class="form-row">
+              <div class="form-group"><label>Patient</label><select><option>Maria Reyes</option><option>Juan Cruz</option><option>Ana Campos</option><option>Ramon Perez</option></select></div>
+              <div class="form-group"><label>Payment Method</label>
+                <select>
+                  <option>Cash</option><option>GCash</option><option>Maya</option>
+                  <option>Credit Card</option><option>Debit Card</option>
+                  <option>Bank Transfer</option><option>PhilHealth</option>
+                  <option>HMO Claim</option><option>Promissory Note</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row3">
+              <div class="form-group"><label>Total Bill (?)</label><input type="number" placeholder="3350.00"></div>
+              <div class="form-group"><label>Amount Paid (?)</label><input type="number" placeholder="3350.00"></div>
+              <div class="form-group"><label>Balance (?)</label><input type="number" placeholder="0.00" readonly style="color:var(--color-text-secondary);"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Date</label><input type="date"></div>
+              <div class="form-group"><label>OR / Reference No.</label><input placeholder="e.g. OR-00489"></div>
+            </div>
+            <div class="form-group" style="margin-bottom:12px;"><label>Remarks</label><input placeholder="Optional notes"></div>
+            <button class="btn btn-primary" style="width:100%;" onclick="showToast('Payment recorded')"><i class="ti ti-check"></i> Post Payment</button>
+          </div>
+          <div>
+            <div class="grid2" style="margin-bottom:14px;">
+              <div class="stat-card"><div class="stat-label">Today's Collection</div><div class="stat-value" style="color:#3B6D11;">?18,400</div></div>
+              <div class="stat-card"><div class="stat-label">Outstanding Balance</div><div class="stat-value" style="color:#A32D2D;">?12,800</div></div>
+            </div>
+            <div class="card">
+              <div class="card-title">Payment Breakdown</div>
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span>Cash</span><span style="font-weight:600;">?42,500</span></div><div class="progress-bar"><div class="progress-fill" style="width:65%;background:#185FA5;"></div></div></div>
+                <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span>HMO / PhilHealth</span><span style="font-weight:600;">?31,200</span></div><div class="progress-bar"><div class="progress-fill" style="width:48%;background:#0F6E56;"></div></div></div>
+                <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span>GCash / Maya</span><span style="font-weight:600;">?12,300</span></div><div class="progress-bar"><div class="progress-fill" style="width:19%;background:#534AB7;"></div></div></div>
+                <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span>Card</span><span style="font-weight:600;">?6,600</span></div><div class="progress-bar"><div class="progress-fill" style="width:10%;background:#854F0B;"></div></div></div>
+                <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span>Promissory Notes</span><span style="font-weight:600;">?10,500</span></div><div class="progress-bar"><div class="progress-fill" style="width:16%;background:#A32D2D;"></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-nop">
+          <div class="card-nop-head">Payment History</div>
+          <table class="table">
+            <thead><tr><th>Date</th><th>Patient</th><th>Service</th><th>Method</th><th>Amount</th><th>Balance</th><th>OR No.</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>Jun 20</td><td>Maria Reyes</td><td>Consult + Labs</td><td><span class="badge badge-green">Cash</span></td><td>?2,150</td><td>?0</td><td>OR-00489</td><td><span class="badge badge-green">Paid</span></td></tr>
+              <tr><td>Jun 18</td><td>Juan Cruz</td><td>Cardiology</td><td><span class="badge badge-purple">Maxicare</span></td><td>?4,500</td><td>?0</td><td>HMO-2210</td><td><span class="badge badge-green">Paid</span></td></tr>
+              <tr><td>Jun 15</td><td>Ana Campos</td><td>Consult</td><td><span class="badge badge-blue">GCash</span></td><td>?800</td><td>?0</td><td>GC-11823</td><td><span class="badge badge-green">Paid</span></td></tr>
+              <tr><td>Jun 12</td><td>Ramon Perez</td><td>Procedure</td><td><span class="badge badge-red">Prom. Note</span></td><td>?6,200</td><td style="color:#A32D2D;font-weight:500;">?3,100</td><td>PN-0045</td><td><span class="badge badge-amber">Partial</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ======================== PROMISSORY NOTES ======================== -->
+      <div class="page" id="page-promissory">
+        <div class="note-box"><i class="ti ti-info-circle" style="font-size:16px;flex-shrink:0;"></i> Promissory notes represent a patient's signed commitment to pay their outstanding balance. Ensure all signatory details are complete and the note is printed and signed before saving.</div>
+        <div class="card">
+          <div class="card-title">Issue New Promissory Note</div>
+          <div class="form-row3">
+            <div class="form-group"><label>Patient Name</label><select><option>Maria Reyes</option><option>Ramon Perez</option><option>Carlo Bautista</option></select></div>
+            <div class="form-group"><label>Total Amount Owed (?)</label><input type="number" placeholder="5000.00"></div>
+            <div class="form-group"><label>Down Payment (?)</label><input type="number" placeholder="0.00"></div>
+          </div>
+          <div class="form-row3">
+            <div class="form-group"><label>Balance to be Paid (?)</label><input type="number" placeholder="5000.00" readonly style="color:var(--color-text-secondary);"></div>
+            <div class="form-group"><label>Promise-to-Pay Date</label><input type="date"></div>
+            <div class="form-group"><label>Installment Arrangement</label><select><option>Lump sum on due date</option><option>Weekly installments</option><option>Monthly installments</option><option>Custom schedule</option></select></div>
+          </div>
+          <div class="divider"></div>
+          <div style="font-size:12px;font-weight:600;color:var(--color-text-secondary);margin-bottom:10px;">CO-SIGNATORY / GUARANTOR</div>
+          <div class="form-row3">
+            <div class="form-group"><label>Full Name</label><input placeholder="Guarantor's complete name"></div>
+            <div class="form-group"><label>Relationship to Patient</label><input placeholder="e.g. Spouse, Parent, Employer"></div>
+            <div class="form-group"><label>Contact Number</label><input placeholder="Mobile number"></div>
+          </div>
+          <div class="form-row3">
+            <div class="form-group"><label>Valid ID Presented</label><select><option>Driver's License</option><option>SSS ID</option><option>Passport</option><option>PhilHealth ID</option><option>Voter's ID</option><option>UMID</option><option>Postal ID</option></select></div>
+            <div class="form-group"><label>ID Number</label><input placeholder="ID number"></div>
+            <div class="form-group"><label>Issuing Agency</label><input placeholder="e.g. LTO, COMELEC"></div>
+          </div>
+          <div class="form-group" style="margin-bottom:12px;"><label>Terms and Conditions</label><textarea placeholder="Payment terms, consequences of default, any special arrangements..."></textarea></div>
+          <div style="display:flex;justify-content:flex-end;gap:8px;"><button class="btn"><i class="ti ti-printer"></i> Print Note</button><button class="btn btn-primary" onclick="showToast('Promissory note issued — PN-0046')"><i class="ti ti-device-floppy"></i> Issue Note</button></div>
+        </div>
+        <div class="card-nop">
+          <div class="card-nop-head">Active Promissory Notes</div>
+          <table class="table">
+            <thead><tr><th>PN No.</th><th>Patient</th><th>Total</th><th>Paid</th><th>Balance</th><th>Due Date</th><th>Guarantor</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td style="font-family:monospace;font-size:12px;">PN-0045</td><td>Ramon Perez</td><td>?6,200</td><td>?3,100</td><td style="color:#A32D2D;font-weight:600;">?3,100</td><td>Jul 15, 2026</td><td>Linda Perez</td><td><span class="badge badge-amber">Partial</span></td></tr>
+              <tr><td style="font-family:monospace;font-size:12px;">PN-0044</td><td>Carlo Bautista</td><td>?9,800</td><td>?0</td><td style="color:#A32D2D;font-weight:600;">?9,800</td><td>Jun 30, 2026</td><td>Rosa Bautista</td><td><span class="badge badge-red">Overdue</span></td></tr>
+              <tr><td style="font-family:monospace;font-size:12px;">PN-0043</td><td>Lisa Torres</td><td>?4,000</td><td>?4,000</td><td>?0</td><td>Jun 10, 2026</td><td>Ben Torres</td><td><span class="badge badge-green">Settled</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ======================== HMO PAGE ======================== -->
+      <div class="page" id="page-hmo">
+        <div class="grid2">
+          <div class="card">
+            <div class="card-title">Patient HMO / Insurance Coverage</div>
+            <div class="form-row">
+              <div class="form-group"><label>Patient</label><select><option>Maria Reyes</option><option>Juan Cruz</option><option>Ramon Perez</option></select></div>
+              <div class="form-group"><label>Insurance / HMO Provider</label>
+                <select><option>PhilHealth</option><option>Maxicare</option><option>MedoCard</option><option>Intellicare</option><option>Caritas Health Shield</option><option>Pacific Cross</option><option>Insular Health Care</option><option>Other</option></select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Member / Policy No.</label><input placeholder="HMO member ID"></div>
+              <div class="form-group"><label>Principal Member Name</label><input placeholder="If dependent — enter principal's name"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Effectivity Date</label><input type="date"></div>
+              <div class="form-group"><label>Expiry Date</label><input type="date"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Coverage Limit (?)</label><input type="number" placeholder="100000.00"></div>
+              <div class="form-group"><label>Coverage Type</label><select><option>Outpatient</option><option>Inpatient</option><option>Both (In + Out)</option></select></div>
+            </div>
+            <div class="form-group" style="margin-bottom:12px;"><label>Covered Services / Remarks</label><textarea placeholder="e.g. Covers consult, labs, medicines up to limit..."></textarea></div>
+            <button class="btn btn-primary" style="width:100%;" onclick="showToast('HMO info saved')">Save HMO Info</button>
+          </div>
+          <div class="card">
+            <div class="card-title">File HMO Claim</div>
+            <div class="form-row">
+              <div class="form-group"><label>Patient</label><select><option>Maria Reyes (PhilHealth)</option><option>Juan Cruz (Maxicare)</option></select></div>
+              <div class="form-group"><label>Claim Type</label><select><option>Outpatient Consultation</option><option>Laboratory Tests</option><option>Medicines</option><option>Procedure / Surgery</option><option>Inpatient Admission</option></select></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Total Amount (?)</label><input type="number" placeholder="1200.00"></div>
+              <div class="form-group"><label>Date of Service</label><input type="date"></div>
+            </div>
+            <div class="form-group" style="margin-bottom:10px;"><label>Primary Diagnosis (ICD-10)</label><input placeholder="e.g. I10 — Essential Hypertension"></div>
+            <div class="form-group" style="margin-bottom:10px;"><label>Attending Physician</label><select><option>Dr. Santos</option><option>Dr. Lim</option><option>Dr. Garcia</option></select></div>
+            <div class="form-group" style="margin-bottom:12px;"><label>Remarks / Supporting Documents</label><textarea placeholder="List attached documents: SOA, receipts, lab results..."></textarea></div>
+            <button class="btn btn-primary" style="width:100%;" onclick="showToast('HMO claim submitted')"><i class="ti ti-send"></i> Submit Claim</button>
+          </div>
+        </div>
+        <div class="card-nop">
+          <div class="card-nop-head">HMO Claims Tracker</div>
+          <table class="table">
+            <thead><tr><th>Claim No.</th><th>Patient</th><th>Provider</th><th>Type</th><th>Amount</th><th>Date Filed</th><th>Remarks</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td style="font-family:monospace;font-size:12px;">CLM-0082</td><td>Juan Cruz</td><td>Maxicare</td><td>Outpatient</td><td>?4,500</td><td>Jun 18, 2026</td><td>—</td><td><span class="badge badge-green">Approved</span></td></tr>
+              <tr><td style="font-family:monospace;font-size:12px;">CLM-0083</td><td>Maria Reyes</td><td>PhilHealth</td><td>Outpatient</td><td>?1,200</td><td>Jun 20, 2026</td><td>Processing MDR</td><td><span class="badge badge-amber">Processing</span></td></tr>
+              <tr><td style="font-family:monospace;font-size:12px;">CLM-0080</td><td>Ramon Perez</td><td>MedoCard</td><td>Procedure</td><td>?3,800</td><td>Jun 10, 2026</td><td>Missing SOA</td><td><span class="badge badge-red">Rejected</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ======================== PHYSICIANS PAGE ======================== -->
+      <div class="page" id="page-physicians">
+        <div class="section-header"><div class="section-title">Physician Directory</div><button class="btn btn-primary btn-sm" onclick="showToast('Scroll down to add a new physician')"><i class="ti ti-plus"></i> Add Physician</button></div>
+        <div class="grid3" style="margin-bottom:16px;">
+          <div class="card" style="margin-bottom:0;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+              <div class="avatar avatar-blue" style="width:48px;height:48px;font-size:17px;font-weight:700;">ES</div>
+              <div><div style="font-weight:600;font-size:14px;">Dr. Eduardo Santos</div><div style="font-size:12px;color:var(--color-text-secondary);">Internal Medicine</div></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;">
+              <div style="display:flex;gap:8px;"><span style="color:var(--color-text-secondary);width:80px;">PRC No.</span><span>PRC-2001-12345</span></div>
+              <div style="display:flex;gap:8px;"><span style="color:var(--color-text-secondary);width:80px;">Contact</span><span>09171001001</span></div>
+              <div style="display:flex;gap:8px;"><span style="color:var(--color-text-secondary);width:80px;">Schedule</span><span>Mon, Wed, Fri · 9AM–3PM</span></div>
+              <div style="display:flex;gap:8px;"><span style="color:var(--color-text-secondary);width:80px;">Room</span><span>Clinic Room 101</span></div>
+            </div>
+            <div class="divider"></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;"><span class="badge badge-green">Active</span><span style="font-size:12px;color:var(--color-text-secondary);">48 patients</span></div>
+          </div>
+          <div class="card" style="margin-bottom:0;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+              <div class="avatar avatar-teal" style="width:48px;height:48px;font-size:17px;font-weight:700;">JL</div>
+              <div><div style="font-weight:600;font-size:14px;">Dr. Julia Lim</div><div style="font-size:12px;color:var(--color-text-secondary);">Cardiology</div></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;">
+              <div style="display:flex;gap:8px;"><span style="color:var(--color-text-secondary);width:80px;">PRC No.</span><span>PRC-2005-67890</span></div>
+              <div style="display:flex;gap:8px;"><span style="color:var(--color-text-secondary);width:80px;">Contact</span><span>09281002002</span></div>
+              <div style="display:flex;gap:8px;"><span style="color:var(--color-text-secondary);width:80px;">Schedule</span><span>Tue, Thu · 10AM–4PM</span></div>
+              <div style="display:flex;gap:8px;"><span style="color:var(--color-text-secondary);width:80px;">Room</span><span>Cardio Suite 202</span></div>
+            </div>
+            <div class="divider"></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;"><span class="badge badge-green">Active</span><span style="font-size:12px;color:var(--color-text-secondary);">35 patients</span></div>
+          </div>
+          <div class="card" style="margin-bottom:0;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+              <div class="avatar avatar-purple" style="width:48px;height:48px;font-size:17px;font-weight:700;">RG</div>
+              <div><div style="font-weight:600;font-size:14px;">Dr. Roberto Garcia</div><div style="font-size:12px;color:var(--color-text-secondary);">Pediatrics</div></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;">
+              <div style="display:flex;gap:8px;"><span style="color:var(--color-text-secondary);width:80px;">PRC No.</span><span>PRC-2010-11223</span></div>
+              <div style="display:flex;gap:8px;"><span style="color:var(--color-text-secondary);width:80px;">Contact</span><span>09391003003</span></div>
+              <div style="display:flex;gap:8px;"><span style="color:var(--color-text-secondary);width:80px;">Schedule</span><span>Mon–Sat · 8AM–12PM</span></div>
+              <div style="display:flex;gap:8px;"><span style="color:var(--color-text-secondary);width:80px;">Room</span><span>Pedia Room 103</span></div>
+            </div>
+            <div class="divider"></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;"><span class="badge badge-green">Active</span><span style="font-size:12px;color:var(--color-text-secondary);">61 patients</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Add / Edit Physician</div>
+          <div class="form-row3">
+            <div class="form-group"><label>First Name</label><input placeholder="First name"></div>
+            <div class="form-group"><label>Last Name</label><input placeholder="Last name"></div>
+            <div class="form-group"><label>Specialty</label><input placeholder="e.g. Cardiology, Pediatrics"></div>
+          </div>
+          <div class="form-row3">
+            <div class="form-group"><label>PRC License No.</label><input placeholder="PRC-YYYY-XXXXX"></div>
+            <div class="form-group"><label>Contact Number</label><input placeholder="Mobile number"></div>
+            <div class="form-group"><label>Email Address</label><input type="email" placeholder="doctor@clinic.com"></div>
+          </div>
+          <div class="form-row3">
+            <div class="form-group"><label>Clinic / Room</label><input placeholder="e.g. Room 202"></div>
+            <div class="form-group"><label>Schedule Days</label><input placeholder="e.g. Mon, Wed, Fri"></div>
+            <div class="form-group"><label>Schedule Hours</label><input placeholder="e.g. 9:00 AM – 3:00 PM"></div>
+          </div>
+          <div style="display:flex;justify-content:flex-end;"><button class="btn btn-primary" onclick="showToast('Physician profile saved')"><i class="ti ti-device-floppy"></i> Save Physician</button></div>
+        </div>
+      </div>
+
+      <!-- ======================== SETTINGS PAGE ======================== -->
+      <div class="page" id="page-settings">
+        <div class="card">
+          <div class="card-title">Clinic Information</div>
+          <div class="form-row">
+            <div class="form-group"><label>Clinic / Hospital Name</label><input value="MediRec Clinic"></div>
+            <div class="form-group"><label>Clinic Code</label><input value="CLN-001"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Address</label><input value="Calamba, Laguna, Philippines"></div>
+            <div class="form-group"><label>Contact Number</label><input value="049-123-4567"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Email</label><input value="info@medirecpro.ph"></div>
+            <div class="form-group"><label>PhilHealth Accreditation No.</label><input placeholder="Accreditation number"></div>
+          </div>
+          <button class="btn btn-primary" onclick="showToast('Clinic settings saved')">Save Settings</button>
+        </div>
+        <div class="card">
+          <div class="card-title">Data Management</div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="btn" onclick="showToast('Export started — check your Downloads folder')"><i class="ti ti-download"></i> Export All Records (JSON)</button>
+            <button class="btn" onclick="showToast('Backup created successfully')"><i class="ti ti-database"></i> Create Backup</button>
+            <button class="btn btn-danger"><i class="ti ti-trash"></i> Clear Sample Data</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+// ---- DATA ----
+var patients = [
+  { id:'PT-00124', fname:'Maria', lname:'Reyes', dob:'1983-03-12', sex:'Female', phone:'09171234567', hmo:'PhilHealth', physician:'Dr. Santos', status:'Active' },
+  { id:'PT-00125', fname:'Juan', lname:'Cruz', dob:'1968-08-03', sex:'Male', phone:'09281234567', hmo:'Maxicare', physician:'Dr. Lim', status:'Active' },
+  { id:'PT-00126', fname:'Ana', lname:'Campos', dob:'1996-06-18', sex:'Female', phone:'09391234567', hmo:'None', physician:'Dr. Santos', status:'Active' },
+  { id:'PT-00127', fname:'Ramon', lname:'Perez', dob:'1960-01-05', sex:'Male', phone:'09501234567', hmo:'MedoCard', physician:'Dr. Garcia', status:'Follow-up' },
+  { id:'PT-00128', fname:'Lisa', lname:'Torres', dob:'1990-11-20', sex:'Female', phone:'09621234567', hmo:'Intellicare', physician:'Dr. Santos', status:'Active' },
+  { id:'PT-00129', fname:'Carlo', lname:'Bautista', dob:'1975-05-14', sex:'Male', phone:'09741234567', hmo:'None', physician:'Dr. Garcia', status:'Inactive' },
+];
+
+function getAge(dob) {
+  var d = new Date(dob), now = new Date();
+  var age = now.getFullYear() - d.getFullYear();
+  if (now < new Date(now.getFullYear(), d.getMonth(), d.getDate())) age--;
+  return age;
+}
+
+function getInitials(fname, lname) { return (fname[0]+lname[0]).toUpperCase(); }
+
+var avatarColors = ['avatar-blue','avatar-teal','avatar-purple','avatar-coral','avatar-green'];
+function getAvatarClass(idx) { return avatarColors[idx % avatarColors.length]; }
+
+var hmoBadge = { 'PhilHealth':'badge-purple','Maxicare':'badge-blue','MedoCard':'badge-blue','Intellicare':'badge-teal','None':'badge-gray' };
+var statusBadge = { 'Active':'badge-green','Follow-up':'badge-amber','Inactive':'badge-gray' };
+
+function renderPatients(list) {
+  var tbody = document.getElementById('pt-tbody');
+  if (!list || list.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:var(--color-text-tertiary);padding:24px;">No patients found</td></tr>';
+    return;
+  }
+  tbody.innerHTML = list.map(function(p, i) {
+    return '<tr><td><div style="display:flex;align-items:center;gap:8px;"><div class="avatar '+getAvatarClass(i)+'">'+getInitials(p.fname,p.lname)+'</div><div><div style="font-weight:500;">'+p.fname+' '+p.lname+'</div><div style="font-size:11px;color:var(--color-text-secondary);">'+p.sex+', '+getAge(p.dob)+' yrs</div></div></div></td>'
+      +'<td style="color:var(--color-text-secondary);font-size:12px;font-family:monospace;">'+p.id+'</td>'
+      +'<td>'+formatDate(p.dob)+'</td>'
+      +'<td>'+getAge(p.dob)+' / '+p.sex[0]+'</td>'
+      +'<td>'+p.phone+'</td>'
+      +'<td><span class="badge '+(hmoBadge[p.hmo]||'badge-gray')+'">'+p.hmo+'</span></td>'
+      +'<td>'+p.physician+'</td>'
+      +'<td><span class="badge '+(statusBadge[p.status]||'badge-gray')+'">'+p.status+'</span></td>'
+      +'<td><button class="btn btn-sm" onclick="openPatientDetail('+i+')">View</button></td>'
+      +'</tr>';
+  }).join('');
+}
+
+function formatDate(d) {
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var dt = new Date(d); return months[dt.getMonth()]+' '+dt.getDate()+', '+dt.getFullYear();
+}
+
+function filterPatients() {
+  var q = document.getElementById('pt-search').value.toLowerCase();
+  var filtered = patients.filter(function(p) {
+    return (p.fname+' '+p.lname).toLowerCase().includes(q) || p.id.toLowerCase().includes(q) || p.phone.includes(q);
+  });
+  renderPatients(filtered);
+}
+
+function openPatientDetail(idx) {
+  var p = patients[idx];
+  var initials = getInitials(p.fname, p.lname);
+  document.getElementById('detail-avatar').textContent = initials;
+  document.getElementById('detail-avatar').className = 'avatar '+getAvatarClass(idx);
+  document.getElementById('detail-name').textContent = p.fname + ' ' + p.lname;
+  document.getElementById('detail-meta').textContent = p.id + ' · ' + p.sex + ', ' + getAge(p.dob) + ' yrs · ' + formatDate(p.dob);
+  var badges = document.getElementById('detail-badges');
+  badges.innerHTML = '<span class="badge '+(hmoBadge[p.hmo]||'badge-gray')+'">'+p.hmo+'</span>'
+    +'<span class="badge '+(statusBadge[p.status]||'badge-gray')+'">'+p.status+'</span>'
+    +'<span class="badge badge-blue">'+p.physician+'</span>';
+  document.getElementById('d-fname').value = p.fname;
+  document.getElementById('d-lname').value = p.lname;
+  document.getElementById('d-dob').value = p.dob;
+  document.getElementById('d-sex').value = p.sex;
+  document.getElementById('d-phone').value = p.phone;
+  showPage('patient-detail', null);
+  switchTab(document.querySelector('.tab'), 'pt-info');
+}
+
+// ---- NAVIGATION ----
+function showPage(id, navEl) {
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+  var page = document.getElementById('page-'+id);
+  if (page) page.classList.add('active');
+  if (navEl) {
+    document.querySelectorAll('.nav-item').forEach(function(n){ n.classList.remove('active'); });
+    navEl.classList.add('active');
+  }
+  var titles = {
+    'dashboard':'Dashboard','patients':'Patients','patient-detail':'Patient Record',
+    'visits':'Check-up Visits','labs':'Laboratories','medicines':'Medicines & Prescriptions',
+    'diagnostics':'Health Diagnostics','payments':'Payments','promissory':'Promissory Notes',
+    'hmo':'HMO / Insurance','physicians':'Physician Directory','settings':'Settings'
+  };
+  document.getElementById('page-title').textContent = titles[id] || id;
+  if (id === 'patients') renderPatients(patients);
+}
+
+function switchTab(el, tabId) {
+  document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
+  el.classList.add('active');
+  document.querySelectorAll('.pt-tab').forEach(function(t){ t.classList.remove('active'); });
+  var tab = document.getElementById(tabId);
+  if (tab) tab.classList.add('active');
+}
+
+// ---- TOAST ----
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2800);
+}
+
+// ---- MODAL ----
+function closeModal(e) { if (e.target === document.getElementById('modal-bg')) closeModalDirect(); }
+function closeModalDirect() { document.getElementById('modal-bg').classList.remove('open'); }
+
+function openModal(title, bodyHTML, footHTML) {
+  document.getElementById('modal-title').textContent = title;
+  document.getElementById('modal-body').innerHTML = bodyHTML;
+  document.getElementById('modal-foot').innerHTML = footHTML || '<button class="btn btn-primary" onclick="closeModalDirect();showToast(\'Saved successfully\')">Save</button>';
+  document.getElementById('modal-bg').classList.add('open');
+}
+
+function openNewPatientModal() {
+  openModal('Register New Patient',
+    '<div class="form-row"><div class="form-group"><label>First Name</label><input placeholder="First name"></div><div class="form-group"><label>Last Name</label><input placeholder="Last name"></div></div>'
+    +'<div class="form-row"><div class="form-group"><label>Date of Birth</label><input type="date"></div><div class="form-group"><label>Sex</label><select><option>Female</option><option>Male</option></select></div></div>'
+    +'<div class="form-row"><div class="form-group"><label>Contact Number</label><input placeholder="09XXXXXXXXX"></div><div class="form-group"><label>HMO / Insurance</label><select><option>None</option><option>PhilHealth</option><option>Maxicare</option><option>MedoCard</option><option>Intellicare</option></select></div></div>'
+    +'<div class="form-group" style="margin-bottom:12px;"><label>Address</label><input placeholder="Complete address"></div>'
+    +'<div class="form-group"><label>Attending Physician</label><select><option>Dr. Santos</option><option>Dr. Lim</option><option>Dr. Garcia</option></select></div>',
+    '<button class="btn" onclick="closeModalDirect()">Cancel</button><button class="btn btn-primary" onclick="closeModalDirect();showToast(\'Patient PT-00130 registered\')"><i class="ti ti-user-plus"></i> Register Patient</button>'
+  );
+}
+
+function openEditPatientModal() {
+  openModal('Edit Patient Record',
+    '<div class="form-row"><div class="form-group"><label>First Name</label><input value="Maria"></div><div class="form-group"><label>Last Name</label><input value="Reyes"></div></div>'
+    +'<div class="form-row"><div class="form-group"><label>Date of Birth</label><input type="date" value="1983-03-12"></div><div class="form-group"><label>Sex</label><select><option>Female</option><option>Male</option></select></div></div>'
+    +'<div class="form-group" style="margin-bottom:12px;"><label>Contact Number</label><input value="09171234567"></div>'
+    +'<div class="form-group"><label>Address</label><input value="123 Rizal St., Calamba, Laguna"></div>',
+    '<button class="btn" onclick="closeModalDirect()">Cancel</button><button class="btn btn-primary" onclick="closeModalDirect();showToast(\'Patient record updated\')">Save Changes</button>'
+  );
+}
+
+function openVisitModal() {
+  openModal('Log Visit',
+    '<div class="form-row"><div class="form-group"><label>Physician</label><select><option>Dr. Santos</option><option>Dr. Lim</option></select></div><div class="form-group"><label>Visit Date</label><input type="date"></div></div>'
+    +'<div class="form-group" style="margin-bottom:10px;"><label>Chief Complaint</label><input placeholder="Reason for visit"></div>'
+    +'<div class="form-row"><div class="form-group"><label>Blood Pressure</label><input placeholder="120/80"></div><div class="form-group"><label>Heart Rate</label><input type="number" placeholder="72"></div></div>'
+    +'<div class="form-group"><label>Clinical Notes</label><textarea placeholder="Findings and observations..."></textarea></div>',
+    '<button class="btn" onclick="closeModalDirect()">Cancel</button><button class="btn btn-primary" onclick="closeModalDirect();showToast(\'Visit logged\')">Save Visit</button>'
+  );
+}
+
+function openLabModal() {
+  openModal('Add Lab Request',
+    '<div class="form-row"><div class="form-group"><label>Physician</label><select><option>Dr. Santos</option><option>Dr. Lim</option></select></div><div class="form-group"><label>Priority</label><select><option>Routine</option><option>Urgent</option></select></div></div>'
+    +'<div class="form-group" style="margin-bottom:10px;"><label>Tests Ordered</label><input placeholder="e.g. CBC, FBS, HbA1c"></div>'
+    +'<div class="form-group"><label>Notes</label><textarea placeholder="Clinical indication..."></textarea></div>',
+    '<button class="btn" onclick="closeModalDirect()">Cancel</button><button class="btn btn-primary" onclick="closeModalDirect();showToast(\'Lab request submitted\')">Submit</button>'
+  );
+}
+
+function openMedModal() {
+  openModal('New Prescription',
+    '<div class="form-row"><div class="form-group"><label>Medicine Name</label><input placeholder="Generic / brand name"></div><div class="form-group"><label>Dosage</label><input placeholder="e.g. 500mg"></div></div>'
+    +'<div class="form-row"><div class="form-group"><label>Frequency</label><select><option>Once daily</option><option>Twice daily</option><option>Three times daily</option><option>As needed (PRN)</option></select></div><div class="form-group"><label>Duration</label><input placeholder="e.g. 30 days / Ongoing"></div></div>'
+    +'<div class="form-group"><label>Instructions</label><input placeholder="e.g. Take with food"></div>',
+    '<button class="btn" onclick="closeModalDirect()">Cancel</button><button class="btn btn-primary" onclick="closeModalDirect();showToast(\'Prescription saved\')">Save</button>'
+  );
+}
+
+function openDiagModal() {
+  openModal('Add Diagnosis',
+    '<div class="form-row"><div class="form-group"><label>ICD-10 Code</label><input placeholder="e.g. I10"></div><div class="form-group"><label>Diagnosis Name</label><input placeholder="e.g. Essential Hypertension"></div></div>'
+    +'<div class="form-row"><div class="form-group"><label>Severity</label><select><option>Mild</option><option>Moderate</option><option>Severe</option></select></div><div class="form-group"><label>Status</label><select><option>Active</option><option>Managed</option><option>Monitoring</option></select></div></div>'
+    +'<div class="form-group"><label>Clinical Notes</label><textarea placeholder="Findings and basis..."></textarea></div>',
+    '<button class="btn" onclick="closeModalDirect()">Cancel</button><button class="btn btn-primary" onclick="closeModalDirect();showToast(\'Diagnosis saved\')">Save</button>'
+  );
+}
+
+// ---- CHIPS ----
+function toggleChip(el) { el.classList.toggle('selected'); }
+
+// ---- INIT ----
+renderPatients(patients);
+</script>
+</body>
+</html>
+HTMLEOF
+echo "Done. File size: $(wc -c < /mnt/user-data/outputs/MediRec_Pro.html) bytes"
+Output

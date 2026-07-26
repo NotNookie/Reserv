@@ -1,0 +1,427 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>MediFlow - Monthly Throughput Summary Report</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Courier+Prime:wght@400;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary-fixed-variant": "#474743",
+                      "secondary-container": "#e2dfda",
+                      "primary-fixed": "#d4e3ff",
+                      "error-container": "#ffdad6",
+                      "on-primary-fixed": "#001c39",
+                      "on-primary": "#ffffff",
+                      "tertiary-container": "#5e5d5c",
+                      "surface-bright": "#f9f9f7",
+                      "on-tertiary-fixed": "#1c1c1a",
+                      "on-surface": "#1a1c1b",
+                      "tertiary": "#464644",
+                      "secondary-fixed-dim": "#c9c6c1",
+                      "on-error-container": "#93000a",
+                      "surface-container-lowest": "#ffffff",
+                      "on-secondary": "#ffffff",
+                      "surface-variant": "#e2e3e1",
+                      "on-primary-fixed-variant": "#004883",
+                      "status-confirmed-text": "#3B6D11",
+                      "on-tertiary": "#ffffff",
+                      "status-pending-bg": "#FAEEDA",
+                      "outline": "#727782",
+                      "on-secondary-container": "#64635e",
+                      "primary": "#004782",
+                      "status-confirmed-bg": "#EAF3DE",
+                      "on-error": "#ffffff",
+                      "on-background": "#1a1c1b",
+                      "on-primary-container": "#c1d9ff",
+                      "on-tertiary-fixed-variant": "#474745",
+                      "on-tertiary-container": "#d9d7d4",
+                      "inverse-primary": "#a4c9ff",
+                      "outline-variant": "#c2c6d2",
+                      "surface-container-highest": "#e2e3e1",
+                      "tertiary-fixed": "#e5e2e0",
+                      "inverse-on-surface": "#f1f1ef",
+                      "error": "#ba1a1a",
+                      "surface-container-high": "#e8e8e6",
+                      "tertiary-fixed-dim": "#c9c6c4",
+                      "secondary-fixed": "#e5e2dd",
+                      "primary-fixed-dim": "#a4c9ff",
+                      "surface-container": "#eeeeec",
+                      "surface": "#f9f9f7",
+                      "status-info-text": "#0F6E56",
+                      "primary-container": "#185fa5",
+                      "status-pending-text": "#854F0B",
+                      "on-secondary-fixed": "#1c1c19",
+                      "inverse-surface": "#2f3130",
+                      "on-surface-variant": "#424751",
+                      "secondary": "#5f5e5a",
+                      "status-info-bg": "#E1F5EE",
+                      "status-cancelled-bg": "#FCEBEB",
+                      "background": "#f9f9f7",
+                      "surface-tint": "#1960a6",
+                      "status-cancelled-text": "#A32D2D",
+                      "surface-dim": "#dadad8",
+                      "brand-muted": "#E6F1FB",
+                      "surface-container-low": "#f4f4f2"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "sidebar-w-collapsed": "56px",
+                      "row-gap": "12px",
+                      "grid-gap": "14px",
+                      "app-padding": "20px",
+                      "card-py": "16px",
+                      "card-px": "20px",
+                      "sidebar-w": "230px",
+                      "item-gap": "10px"
+              },
+              "fontFamily": {
+                      "label-badge": ["Inter"],
+                      "detail-name": ["Inter"],
+                      "stat-value": ["Inter"],
+                      "ui-small": ["Inter"],
+                      "body": ["Inter"],
+                      "mono": ["Courier Prime"],
+                      "micro": ["Inter"],
+                      "topbar-title": ["Inter"],
+                      "metadata": ["Inter"]
+              },
+              "fontSize": {
+                      "label-badge": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                      "detail-name": ["17px", {"lineHeight": "24px", "fontWeight": "700"}],
+                      "stat-value": ["22px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "ui-small": ["13px", {"lineHeight": "18px", "fontWeight": "500"}],
+                      "body": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "mono": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                      "micro": ["10px", {"lineHeight": "12px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "topbar-title": ["15px", {"lineHeight": "20px", "fontWeight": "600"}],
+                      "metadata": ["11px", {"lineHeight": "14px", "fontWeight": "500"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+          font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+          font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body h-screen flex overflow-hidden">
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 h-full w-sidebar-w bg-surface dark:bg-surface-dim border-r-[0.5px] border-outline-variant flex flex-col py-app-padding z-20 transition-all duration-300 md:flex hidden">
+<div class="px-app-padding mb-8 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined icon-fill">medical_services</span>
+</div>
+<div>
+<h1 class="font-topbar-title text-topbar-title text-primary dark:text-primary-fixed m-0 leading-tight">MediFlow</h1>
+<p class="font-metadata text-metadata text-on-surface-variant m-0">Clinical Operations</p>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto px-4 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant dark:text-on-tertiary-container hover:bg-surface-container-high dark:hover:bg-tertiary-container transition-colors font-body text-body scale-95 active:scale-98" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-primary dark:text-primary-fixed-dim font-bold bg-brand-muted dark:bg-primary-container transition-colors scale-95 active:scale-98" href="#">
+<span class="material-symbols-outlined icon-fill" data-icon="analytics">analytics</span>
+<span>Staff Performance</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant dark:text-on-tertiary-container hover:bg-surface-container-high dark:hover:bg-tertiary-container transition-colors font-body text-body scale-95 active:scale-98" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_month">calendar_month</span>
+<span>Reservations</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant dark:text-on-tertiary-container hover:bg-surface-container-high dark:hover:bg-tertiary-container transition-colors font-body text-body scale-95 active:scale-98" href="#">
+<span class="material-symbols-outlined" data-icon="patient_list">patient_list</span>
+<span>Patient Records</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant dark:text-on-tertiary-container hover:bg-surface-container-high dark:hover:bg-tertiary-container transition-colors font-body text-body scale-95 active:scale-98" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</div>
+<div class="px-4 mt-auto flex flex-col gap-1 pt-4 border-t-[0.5px] border-outline-variant/50">
+<button class="w-full bg-primary text-on-primary font-label-badge text-label-badge py-2 px-4 rounded-lg flex items-center justify-center gap-2 mb-4 hover:bg-surface-tint transition-colors scale-95 active:scale-98">
+<span class="material-symbols-outlined text-[18px]">add_box</span> Generate Report
+            </button>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors font-body text-body scale-95 active:scale-98" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span>Support</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-error hover:bg-error-container transition-colors font-body text-body scale-95 active:scale-98" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span>Sign Out</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col md:ml-sidebar-w w-full md:w-[calc(100%-230px)] bg-surface-container-low overflow-hidden">
+<!-- TopNavBar -->
+<header class="bg-surface dark:bg-surface-dim border-b-[0.5px] border-outline-variant flex items-center justify-between px-app-padding h-16 shrink-0 sticky top-0 z-10">
+<div class="flex items-center gap-4">
+<h2 class="font-topbar-title text-topbar-title font-bold text-on-surface dark:text-on-surface-variant m-0">Monthly Throughput Summary</h2>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative focus-within:ring-2 focus-within:ring-primary/12 rounded-full overflow-hidden">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+<input class="pl-10 pr-4 py-1.5 bg-surface-container border-[0.5px] border-outline-variant/50 rounded-full font-body text-body text-on-surface focus:outline-none focus:border-primary w-64 transition-all" placeholder="Search analytics..." type="text">
+</div>
+<button class="w-8 h-8 flex items-center justify-center rounded-full text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-full text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Canvas -->
+<main class="flex-1 overflow-y-auto p-app-padding">
+<!-- Page Header Actions -->
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+<div class="flex items-center gap-2 text-on-surface-variant font-body text-body">
+<span class="material-symbols-outlined text-[20px]">calendar_today</span>
+<select class="bg-transparent border-none text-on-surface font-detail-name text-detail-name focus:ring-0 p-0 pr-6 cursor-pointer">
+<option>October 2026</option>
+<option>September 2026</option>
+<option>August 2026</option>
+</select>
+</div>
+<div class="flex items-center gap-3">
+<button class="border-[0.5px] border-outline-variant bg-surface text-primary font-label-badge text-label-badge py-2 px-4 rounded-lg flex items-center gap-2 hover:bg-surface-container-lowest transition-colors scale-95 active:scale-98">
+<span class="material-symbols-outlined text-[18px]">download</span> Download PDF
+                    </button>
+<button class="border-[0.5px] border-outline-variant bg-surface text-primary font-label-badge text-label-badge py-2 px-4 rounded-lg flex items-center gap-2 hover:bg-surface-container-lowest transition-colors scale-95 active:scale-98">
+<span class="material-symbols-outlined text-[18px]">export_notes</span> Export Data
+                    </button>
+</div>
+</div>
+<!-- KPI Cards Row -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-grid-gap mb-grid-gap">
+<!-- KPI 1 -->
+<div class="bg-surface border-[0.5px] border-outline-variant rounded-xl p-card-px flex flex-col gap-2 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-24 h-24 bg-brand-muted rounded-bl-full opacity-50 -mr-6 -mt-6"></div>
+<span class="font-metadata text-metadata text-on-surface-variant uppercase tracking-wider relative z-10">Total Throughput</span>
+<div class="flex items-end gap-3 relative z-10">
+<span class="font-stat-value text-stat-value text-on-surface">14,285</span>
+<span class="font-ui-small text-ui-small text-status-confirmed-text flex items-center bg-status-confirmed-bg px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> +5.2%
+                        </span>
+</div>
+<span class="font-micro text-micro text-outline mt-1 relative z-10">vs Previous Month (13,578)</span>
+</div>
+<!-- KPI 2 -->
+<div class="bg-surface border-[0.5px] border-outline-variant rounded-xl p-card-px flex flex-col gap-2">
+<span class="font-metadata text-metadata text-on-surface-variant uppercase tracking-wider">Avg Patient Stay</span>
+<div class="flex items-end gap-3">
+<span class="font-stat-value text-stat-value text-on-surface">2h 45m</span>
+<span class="font-ui-small text-ui-small text-status-cancelled-text flex items-center bg-status-cancelled-bg px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> +12m
+                        </span>
+</div>
+<span class="font-micro text-micro text-outline mt-1">Target: &lt; 2h 30m</span>
+</div>
+<!-- KPI 3 -->
+<div class="bg-surface border-[0.5px] border-outline-variant rounded-xl p-card-px flex flex-col gap-2">
+<span class="font-metadata text-metadata text-on-surface-variant uppercase tracking-wider">Peak Hourly Vol</span>
+<div class="flex items-end gap-3">
+<span class="font-stat-value text-stat-value text-on-surface">84 <span class="font-body text-body text-on-surface-variant">pts/hr</span></span>
+</div>
+<span class="font-micro text-micro text-outline mt-1">Typically 10:00 AM - 11:00 AM</span>
+</div>
+<!-- KPI 4 -->
+<div class="bg-surface border-[0.5px] border-outline-variant rounded-xl p-card-px flex flex-col gap-2">
+<span class="font-metadata text-metadata text-on-surface-variant uppercase tracking-wider">Room Util. Rate</span>
+<div class="flex items-end gap-3">
+<span class="font-stat-value text-stat-value text-on-surface">92.4%</span>
+<span class="font-ui-small text-ui-small text-status-confirmed-text flex items-center bg-status-confirmed-bg px-1.5 py-0.5 rounded">
+                            Optimal
+                        </span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full mt-2 overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 92.4%"></div>
+</div>
+</div>
+</div>
+<!-- Bento Grid Layout for Charts & Tables -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-grid-gap">
+<!-- Main Line Chart (Spans 2 cols on LG) -->
+<div class="lg:col-span-2 bg-surface border-[0.5px] border-outline-variant rounded-xl p-card-px flex flex-col min-h-[360px]">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-detail-name text-detail-name text-on-surface m-0">Daily Volume Trends</h3>
+<div class="flex gap-2">
+<span class="flex items-center gap-1 font-micro text-micro text-on-surface-variant"><div class="w-2 h-2 rounded-full bg-primary"></div> Actual</span>
+<span class="flex items-center gap-1 font-micro text-micro text-on-surface-variant"><div class="w-2 h-2 rounded-full bg-outline-variant border border-outline border-dashed"></div> Projected</span>
+</div>
+</div>
+<!-- Placeholder for Chart -->
+<div class="flex-1 w-full bg-surface-container-lowest border-[0.5px] border-outline-variant/30 rounded-lg relative overflow-hidden flex items-end p-4">
+<!-- Simulated Grid Lines -->
+<div class="absolute inset-0 flex flex-col justify-between py-4 z-0">
+<div class="w-full border-t border-outline-variant/20 h-0"></div>
+<div class="w-full border-t border-outline-variant/20 h-0"></div>
+<div class="w-full border-t border-outline-variant/20 h-0"></div>
+<div class="w-full border-t border-outline-variant/20 h-0"></div>
+<div class="w-full border-t border-outline-variant/20 h-0"></div>
+</div>
+<!-- Simulated Line Chart SVG Graphic -->
+<svg class="w-full h-full absolute inset-0 z-10" preserveAspectRatio="none" viewBox="0 0 1000 300">
+<defs>
+<linearGradient id="lineGrad" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#004782" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#004782" stop-opacity="0"></stop>
+</linearGradient>
+</defs>
+<path d="M0,250 L100,220 L200,260 L300,150 L400,180 L500,80 L600,120 L700,50 L800,100 L900,40 L1000,60 L1000,300 L0,300 Z" fill="url(#lineGrad)"></path>
+<path d="M0,250 L100,220 L200,260 L300,150 L400,180 L500,80 L600,120 L700,50 L800,100 L900,40 L1000,60" fill="none" stroke="#004782" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<div class="w-full flex justify-between absolute bottom-2 left-0 px-4 z-20 font-mono text-mono text-outline text-[10px]">
+<span>Oct 1</span>
+<span>Oct 8</span>
+<span>Oct 15</span>
+<span>Oct 22</span>
+<span>Oct 31</span>
+</div>
+</div>
+</div>
+<!-- Horizontal Bar Chart -->
+<div class="bg-surface border-[0.5px] border-outline-variant rounded-xl p-card-px flex flex-col">
+<h3 class="font-detail-name text-detail-name text-on-surface m-0 mb-6">Throughput by Dept.</h3>
+<div class="flex flex-col gap-4 flex-1 justify-center">
+<!-- Bar 1 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-ui-small text-ui-small">
+<span class="text-on-surface">Emergency</span>
+<span class="text-on-surface-variant font-mono">4,120</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-status-cancelled-text h-full rounded-full" style="width: 85%"></div>
+</div>
+</div>
+<!-- Bar 2 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-ui-small text-ui-small">
+<span class="text-on-surface">Internal Med</span>
+<span class="text-on-surface-variant font-mono">3,850</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 70%"></div>
+</div>
+</div>
+<!-- Bar 3 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-ui-small text-ui-small">
+<span class="text-on-surface">Pediatrics</span>
+<span class="text-on-surface-variant font-mono">2,410</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-primary-container h-full rounded-full" style="width: 45%"></div>
+</div>
+</div>
+<!-- Bar 4 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-ui-small text-ui-small">
+<span class="text-on-surface">Cardiology</span>
+<span class="text-on-surface-variant font-mono">1,980</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-status-info-text h-full rounded-full" style="width: 35%"></div>
+</div>
+</div>
+<!-- Bar 5 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-ui-small text-ui-small">
+<span class="text-on-surface">Radiology</span>
+<span class="text-on-surface-variant font-mono">1,925</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-outline h-full rounded-full" style="width: 32%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Data Table (Spans full width below) -->
+<div class="lg:col-span-3 bg-surface border-[0.5px] border-outline-variant rounded-xl overflow-hidden flex flex-col">
+<div class="p-card-px border-b-[0.5px] border-outline-variant flex justify-between items-center">
+<h3 class="font-detail-name text-detail-name text-on-surface m-0">Patient Flow Efficiency</h3>
+<button class="text-primary font-label-badge text-label-badge hover:underline">View Full Report</button>
+</div>
+<div class="overflow-x-auto w-full">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-lowest border-b-[0.5px] border-outline-variant">
+<th class="font-metadata text-metadata text-on-surface-variant uppercase tracking-wider py-3 px-4 font-normal">Department</th>
+<th class="font-metadata text-metadata text-on-surface-variant uppercase tracking-wider py-3 px-4 font-normal">Total Visits</th>
+<th class="font-metadata text-metadata text-on-surface-variant uppercase tracking-wider py-3 px-4 font-normal">Avg. Check-in to Consult</th>
+<th class="font-metadata text-metadata text-on-surface-variant uppercase tracking-wider py-3 px-4 font-normal">Avg. Consult to Discharge</th>
+<th class="font-metadata text-metadata text-on-surface-variant uppercase tracking-wider py-3 px-4 font-normal text-right">Efficiency Rating</th>
+</tr>
+</thead>
+<tbody class="font-ui-small text-ui-small text-on-surface divide-y-[0.5px] divide-outline-variant/50">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-4 font-medium">Emergency</td>
+<td class="py-3 px-4 font-mono text-on-surface-variant">4,120</td>
+<td class="py-3 px-4">1h 15m</td>
+<td class="py-3 px-4">3h 40m</td>
+<td class="py-3 px-4 text-right">
+<span class="inline-block bg-status-cancelled-bg text-status-cancelled-text font-label-badge text-label-badge px-2 py-1 rounded border-[0.5px] border-status-cancelled-text/30">Needs Review (62%)</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-4 font-medium">Internal Med</td>
+<td class="py-3 px-4 font-mono text-on-surface-variant">3,850</td>
+<td class="py-3 px-4">0h 25m</td>
+<td class="py-3 px-4">1h 10m</td>
+<td class="py-3 px-4 text-right">
+<span class="inline-block bg-status-confirmed-bg text-status-confirmed-text font-label-badge text-label-badge px-2 py-1 rounded border-[0.5px] border-status-confirmed-text/30">Optimal (94%)</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-4 font-medium">Pediatrics</td>
+<td class="py-3 px-4 font-mono text-on-surface-variant">2,410</td>
+<td class="py-3 px-4">0h 18m</td>
+<td class="py-3 px-4">0h 55m</td>
+<td class="py-3 px-4 text-right">
+<span class="inline-block bg-status-confirmed-bg text-status-confirmed-text font-label-badge text-label-badge px-2 py-1 rounded border-[0.5px] border-status-confirmed-text/30">Optimal (96%)</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-4 font-medium">Cardiology</td>
+<td class="py-3 px-4 font-mono text-on-surface-variant">1,980</td>
+<td class="py-3 px-4">0h 40m</td>
+<td class="py-3 px-4">1h 45m</td>
+<td class="py-3 px-4 text-right">
+<span class="inline-block bg-status-pending-bg text-status-pending-text font-label-badge text-label-badge px-2 py-1 rounded border-[0.5px] border-status-pending-text/30">Acceptable (78%)</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-4 font-medium">Radiology</td>
+<td class="py-3 px-4 font-mono text-on-surface-variant">1,925</td>
+<td class="py-3 px-4">0h 15m</td>
+<td class="py-3 px-4">0h 30m</td>
+<td class="py-3 px-4 text-right">
+<span class="inline-block bg-status-confirmed-bg text-status-confirmed-text font-label-badge text-label-badge px-2 py-1 rounded border-[0.5px] border-status-confirmed-text/30">Optimal (98%)</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="h-8"></div> <!-- Bottom Spacing -->
+</main>
+</div>
+</body></html>

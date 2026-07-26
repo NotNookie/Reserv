@@ -1,0 +1,208 @@
+@import 'tailwindcss';
+
+/*
+ * Reserv design system — "Clinical Precision"
+ * Semantic tokens are defined as CSS variables on :root (light) and .dark,
+ * then registered with Tailwind via `@theme inline` so utilities such as
+ * `bg-surface`, `text-muted-foreground`, `border-border` resolve to the
+ * active theme at runtime.
+ */
+
+/* Class-based dark mode: toggling `.dark` on <html> flips the theme. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ----------------------------------------------------------------------- */
+/* Light theme (default)                                                    */
+/* ----------------------------------------------------------------------- */
+:root {
+  /* Surfaces */
+  --background: #f1f0ec;
+  --surface: #ffffff;
+  --surface-muted: #f7f7f5;
+  --surface-raised: #eeeeec;
+
+  /* Text */
+  --foreground: #1a1c1b;
+  --muted-foreground: #5f5e5a;
+  --subtle-foreground: #888780;
+
+  /* Borders */
+  --border: rgba(0, 0, 0, 0.1);
+  --border-strong: rgba(0, 0, 0, 0.2);
+
+  /* Brand */
+  --primary: #185fa5;
+  --primary-hover: #0c447c;
+  --primary-foreground: #ffffff;
+  --brand-muted: #e6f1fb;
+  --brand-muted-foreground: #185fa5;
+  --ring: rgba(24, 95, 165, 0.4);
+
+  /* Status — confirmed / success */
+  --status-confirmed: #3b6d11;
+  --status-confirmed-surface: #eaf3de;
+  /* Status — pending / warning */
+  --status-pending: #854f0b;
+  --status-pending-surface: #faeeda;
+  /* Status — cancelled / danger */
+  --status-cancelled: #a32d2d;
+  --status-cancelled-surface: #fcebeb;
+  /* Status — info / teal */
+  --status-info: #0f6e56;
+  --status-info-surface: #e1f5ee;
+  /* Status — neutral */
+  --status-neutral: #5f5e5a;
+  --status-neutral-surface: #f1efe8;
+  /* Accent — blue / purple (for tags) */
+  --accent-blue: #185fa5;
+  --accent-blue-surface: #e6f1fb;
+  --accent-purple: #534ab7;
+  --accent-purple-surface: #eeedfe;
+}
+
+/* ----------------------------------------------------------------------- */
+/* Dark theme                                                               */
+/* ----------------------------------------------------------------------- */
+.dark {
+  --background: #141413;
+  --surface: #1e1e1c;
+  --surface-muted: #2a2a27;
+  --surface-raised: #2f2f2c;
+
+  --foreground: #f0ede8;
+  --muted-foreground: #b4b2a9;
+  --subtle-foreground: #888780;
+
+  --border: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.18);
+
+  --primary: #4c97e0;
+  --primary-hover: #62a4e6;
+  --primary-foreground: #08213a;
+  --brand-muted: rgba(24, 95, 165, 0.22);
+  --brand-muted-foreground: #9cc4f0;
+  --ring: rgba(98, 164, 230, 0.5);
+
+  --status-confirmed: #a7d98b;
+  --status-confirmed-surface: rgba(59, 109, 17, 0.22);
+  --status-pending: #e8b463;
+  --status-pending-surface: rgba(133, 79, 11, 0.24);
+  --status-cancelled: #efa0a0;
+  --status-cancelled-surface: rgba(163, 45, 45, 0.24);
+  --status-info: #7fd8c0;
+  --status-info-surface: rgba(15, 110, 86, 0.22);
+  --status-neutral: #b4b2a9;
+  --status-neutral-surface: rgba(255, 255, 255, 0.06);
+  --accent-blue: #9cc4f0;
+  --accent-blue-surface: rgba(24, 95, 165, 0.22);
+  --accent-purple: #b9b4f0;
+  --accent-purple-surface: rgba(83, 74, 183, 0.24);
+}
+
+/* ----------------------------------------------------------------------- */
+/* Register tokens with Tailwind                                            */
+/* ----------------------------------------------------------------------- */
+@theme inline {
+  /* Colors */
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-surface-raised: var(--surface-raised);
+
+  --color-foreground: var(--foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-subtle-foreground: var(--subtle-foreground);
+
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-brand-muted: var(--brand-muted);
+  --color-brand-muted-foreground: var(--brand-muted-foreground);
+  --color-ring: var(--ring);
+
+  --color-status-confirmed: var(--status-confirmed);
+  --color-status-confirmed-surface: var(--status-confirmed-surface);
+  --color-status-pending: var(--status-pending);
+  --color-status-pending-surface: var(--status-pending-surface);
+  --color-status-cancelled: var(--status-cancelled);
+  --color-status-cancelled-surface: var(--status-cancelled-surface);
+  --color-status-info: var(--status-info);
+  --color-status-info-surface: var(--status-info-surface);
+  --color-status-neutral: var(--status-neutral);
+  --color-status-neutral-surface: var(--status-neutral-surface);
+  --color-accent-blue: var(--accent-blue);
+  --color-accent-blue-surface: var(--accent-blue-surface);
+  --color-accent-purple: var(--accent-purple);
+  --color-accent-purple-surface: var(--accent-purple-surface);
+
+  /* Typography */
+  --font-sans:
+    'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+    sans-serif;
+  --font-mono:
+    'Courier Prime', ui-monospace, 'Cascadia Code', Consolas, monospace;
+
+  /* Radii (DESIGN.md scale) */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+
+  /* Fixed sidebar widths */
+  --spacing-sidebar: 15rem;
+  --spacing-sidebar-collapsed: 3.5rem;
+}
+
+/* ----------------------------------------------------------------------- */
+/* Base layer                                                               */
+/* ----------------------------------------------------------------------- */
+@layer base {
+  html {
+    color-scheme: light dark;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  *,
+  ::before,
+  ::after {
+    border-color: var(--border);
+  }
+
+  /* Accessible focus ring for keyboard users. */
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+}
+
+/* Material Symbols icon font base styles. */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}

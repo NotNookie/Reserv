@@ -1,0 +1,618 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Staff Performance Analytics - MediFlow</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Courier+Prime&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-fixed": "#e5e2dd",
+                      "inverse-on-surface": "#f1f1ef",
+                      "status-confirmed-text": "#3B6D11",
+                      "status-cancelled-text": "#A32D2D",
+                      "inverse-primary": "#a4c9ff",
+                      "on-secondary-fixed": "#1c1c19",
+                      "tertiary-fixed": "#e5e2e0",
+                      "on-primary-container": "#c1d9ff",
+                      "outline-variant": "#c2c6d2",
+                      "on-tertiary-fixed": "#1c1c1a",
+                      "surface-container-low": "#f4f4f2",
+                      "secondary-container": "#e2dfda",
+                      "surface-container-high": "#e8e8e6",
+                      "outline": "#727782",
+                      "on-surface": "#1a1c1b",
+                      "on-secondary-container": "#64635e",
+                      "error": "#ba1a1a",
+                      "tertiary-fixed-dim": "#c9c6c4",
+                      "error-container": "#ffdad6",
+                      "status-cancelled-bg": "#FCEBEB",
+                      "secondary-fixed-dim": "#c9c6c1",
+                      "on-surface-variant": "#424751",
+                      "surface-tint": "#1960a6",
+                      "on-background": "#1a1c1b",
+                      "on-primary-fixed-variant": "#004883",
+                      "background": "#f9f9f7",
+                      "status-info-text": "#0F6E56",
+                      "on-error": "#ffffff",
+                      "inverse-surface": "#2f3130",
+                      "on-secondary-fixed-variant": "#474743",
+                      "status-confirmed-bg": "#EAF3DE",
+                      "on-error-container": "#93000a",
+                      "primary-fixed-dim": "#a4c9ff",
+                      "on-primary-fixed": "#001c39",
+                      "primary": "#004782",
+                      "surface-container-highest": "#e2e3e1",
+                      "surface-container": "#eeeeec",
+                      "surface-variant": "#e2e3e1",
+                      "status-pending-bg": "#FAEEDA",
+                      "surface-container-lowest": "#ffffff",
+                      "brand-muted": "#E6F1FB",
+                      "primary-fixed": "#d4e3ff",
+                      "status-pending-text": "#854F0B",
+                      "status-info-bg": "#E1F5EE",
+                      "secondary": "#5f5e5a",
+                      "on-secondary": "#ffffff",
+                      "on-tertiary-fixed-variant": "#474745",
+                      "tertiary": "#464644",
+                      "surface": "#f9f9f7",
+                      "surface-bright": "#f9f9f7",
+                      "tertiary-container": "#5e5d5c",
+                      "primary-container": "#185fa5",
+                      "surface-dim": "#dadad8",
+                      "on-primary": "#ffffff",
+                      "on-tertiary": "#ffffff",
+                      "on-tertiary-container": "#d9d7d4"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "item-gap": "10px",
+                      "card-py": "16px",
+                      "sidebar-w-collapsed": "56px",
+                      "sidebar-w": "230px",
+                      "card-px": "20px",
+                      "row-gap": "12px",
+                      "app-padding": "20px",
+                      "grid-gap": "14px"
+              },
+              "fontFamily": {
+                      "topbar-title": [
+                              "Inter"
+                      ],
+                      "label-badge": [
+                              "Inter"
+                      ],
+                      "stat-value": [
+                              "Inter"
+                      ],
+                      "metadata": [
+                              "Inter"
+                      ],
+                      "micro": [
+                              "Inter"
+                      ],
+                      "ui-small": [
+                              "Inter"
+                      ],
+                      "body": [
+                              "Inter"
+                      ],
+                      "mono": [
+                              "Courier Prime"
+                      ],
+                      "detail-name": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "topbar-title": [
+                              "15px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-badge": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "stat-value": [
+                              "22px",
+                              {
+                                      "lineHeight": "28px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "metadata": [
+                              "11px",
+                              {
+                                      "lineHeight": "14px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "micro": [
+                              "10px",
+                              {
+                                      "lineHeight": "12px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "ui-small": [
+                              "13px",
+                              {
+                                      "lineHeight": "18px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "mono": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "detail-name": [
+                              "17px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+</head>
+<body class="bg-background min-h-screen text-on-surface font-body text-body font-body text-body flex overflow-hidden">
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 h-full w-[230px] bg-surface dark:bg-surface-dim border-r-[0.5px] border-outline-variant flex flex-col h-full py-app-padding hidden md:flex z-40 shrink-0">
+<div class="px-5 mb-8 flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">medical_services</span>
+</div>
+<div>
+<h1 class="font-topbar-title text-topbar-title text-primary dark:text-primary-fixed">MediFlow</h1>
+<p class="font-metadata text-metadata text-on-surface-variant">Clinical Operations</p>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto px-3 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant dark:text-on-tertiary-container hover:bg-surface-container-high dark:hover:bg-tertiary-container transition-colors scale-95 active:scale-98 transition-transform duration-200 group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">dashboard</span>
+<span class="font-ui-small text-ui-small">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-primary dark:text-primary-fixed-dim font-bold bg-brand-muted dark:bg-primary-container hover:bg-surface-container-high dark:hover:bg-tertiary-container transition-colors scale-95 active:scale-98 transition-transform duration-200 group" href="#">
+<span class="material-symbols-outlined text-primary group-hover:text-primary transition-colors">analytics</span>
+<span class="font-ui-small text-ui-small">Staff Performance</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant dark:text-on-tertiary-container hover:bg-surface-container-high dark:hover:bg-tertiary-container transition-colors scale-95 active:scale-98 transition-transform duration-200 group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">calendar_month</span>
+<span class="font-ui-small text-ui-small">Reservations</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant dark:text-on-tertiary-container hover:bg-surface-container-high dark:hover:bg-tertiary-container transition-colors scale-95 active:scale-98 transition-transform duration-200 group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">patient_list</span>
+<span class="font-ui-small text-ui-small">Patient Records</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant dark:text-on-tertiary-container hover:bg-surface-container-high dark:hover:bg-tertiary-container transition-colors scale-95 active:scale-98 transition-transform duration-200 group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">settings</span>
+<span class="font-ui-small text-ui-small">Settings</span>
+</a>
+</div>
+<div class="px-3 mt-auto">
+<button class="w-full mb-4 bg-primary text-on-primary py-2 rounded-lg font-ui-small text-ui-small hover:bg-primary/90 transition-colors scale-95 active:scale-98 transition-transform duration-200 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">summarize</span>
+                Generate Report
+            </button>
+<div class="border-t-[0.5px] border-outline-variant pt-4 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant dark:text-on-tertiary-container hover:bg-surface-container-high dark:hover:bg-tertiary-container transition-colors scale-95 active:scale-98 transition-transform duration-200 group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">help</span>
+<span class="font-ui-small text-ui-small">Support</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant dark:text-on-tertiary-container hover:bg-surface-container-high dark:hover:bg-tertiary-container transition-colors scale-95 active:scale-98 transition-transform duration-200 group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">logout</span>
+<span class="font-ui-small text-ui-small">Sign Out</span>
+</a>
+</div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col md:ml-[230px] w-full min-h-screen overflow-hidden">
+<!-- TopNavBar -->
+<header class="bg-surface dark:bg-surface-dim border-b-[0.5px] border-outline-variant flex items-center justify-between px-app-padding h-16 w-full shrink-0 z-30">
+<div class="flex items-center gap-4 flex-1">
+<button class="md:hidden text-on-surface-variant p-1 rounded hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h2 class="font-topbar-title text-topbar-title font-bold text-on-surface dark:text-on-surface-variant truncate">Staff Performance Analytics</h2>
+<div class="hidden sm:flex items-center bg-surface-container-low rounded-full px-3 py-1.5 border-[0.5px] border-outline-variant focus-within:ring-2 focus-within:ring-primary/12 ml-4 w-64 max-w-sm">
+<span class="material-symbols-outlined text-outline text-[18px]">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-ui-small font-ui-small text-on-surface placeholder:text-outline w-full py-0" placeholder="Search staff, patients..." type="text">
+</div>
+</div>
+<div class="flex items-center gap-3 shrink-0">
+<button class="text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors p-1.5 rounded-full hover:bg-surface-container-low relative focus-within:ring-2 focus-within:ring-primary/12">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors p-1.5 rounded-full hover:bg-surface-container-low focus-within:ring-2 focus-within:ring-primary/12">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Page Content -->
+<main class="flex-1 overflow-y-auto p-4 md:p-app-padding bg-background w-full">
+<div class="max-w-7xl mx-auto space-y-6">
+<!-- Filter Bar -->
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-surface rounded-xl border-[0.5px] border-outline-variant p-4">
+<div class="flex flex-wrap items-center gap-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline text-[18px]">filter_list</span>
+<span class="font-label-badge text-label-badge text-on-surface-variant">Filters:</span>
+</div>
+<div class="relative group">
+<select class="appearance-none bg-surface-container-low border-[0.5px] border-outline-variant rounded-lg pl-3 pr-8 py-1.5 font-ui-small text-ui-small text-on-surface focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors cursor-pointer outline-none">
+<option>Last 30 Days</option>
+<option>Last 7 Days</option>
+<option>This Quarter</option>
+<option>This Year</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-outline pointer-events-none text-[18px]">expand_more</span>
+</div>
+<div class="relative group">
+<select class="appearance-none bg-surface-container-low border-[0.5px] border-outline-variant rounded-lg pl-3 pr-8 py-1.5 font-ui-small text-ui-small text-on-surface focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors cursor-pointer outline-none">
+<option>All Departments</option>
+<option>Internal Medicine</option>
+<option>Cardiology</option>
+<option>Pediatrics</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-outline pointer-events-none text-[18px]">expand_more</span>
+</div>
+<div class="relative group">
+<select class="appearance-none bg-surface-container-low border-[0.5px] border-outline-variant rounded-lg pl-3 pr-8 py-1.5 font-ui-small text-ui-small text-on-surface focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors cursor-pointer outline-none">
+<option>All Staff Levels</option>
+<option>Attending Physician</option>
+<option>Resident</option>
+<option>Nurse</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-outline pointer-events-none text-[18px]">expand_more</span>
+</div>
+</div>
+<button class="text-primary font-ui-small text-ui-small hover:underline flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">refresh</span>
+                        Reset Filters
+                    </button>
+</div>
+<!-- KPI Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-grid-gap">
+<!-- KPI 1 -->
+<div class="bg-surface rounded-xl border-[0.5px] border-outline-variant p-card-py px-card-px hover:border-primary/30 transition-colors">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-metadata text-metadata text-on-surface-variant uppercase tracking-wider">Avg Turnaround Time</h3>
+<span class="material-symbols-outlined text-outline text-[18px]">timer</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-stat-value text-stat-value text-on-surface">24m</span>
+<span class="font-micro text-micro text-status-confirmed-text bg-status-confirmed-bg px-1.5 py-0.5 rounded-full flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px]">arrow_downward</span>
+                                5%
+                            </span>
+</div>
+<p class="font-metadata text-metadata text-outline mt-1">vs last month (25.2m)</p>
+</div>
+<!-- KPI 2 -->
+<div class="bg-surface rounded-xl border-[0.5px] border-outline-variant p-card-py px-card-px hover:border-primary/30 transition-colors">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-metadata text-metadata text-on-surface-variant uppercase tracking-wider">Total Consultations</h3>
+<span class="material-symbols-outlined text-outline text-[18px]">stethoscope</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-stat-value text-stat-value text-on-surface">1,248</span>
+<span class="font-micro text-micro text-status-confirmed-text bg-status-confirmed-bg px-1.5 py-0.5 rounded-full flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px]">trending_up</span>
+                                12%
+                            </span>
+</div>
+<p class="font-metadata text-metadata text-outline mt-1">vs last month (1,114)</p>
+</div>
+<!-- KPI 3 -->
+<div class="bg-surface rounded-xl border-[0.5px] border-outline-variant p-card-py px-card-px hover:border-primary/30 transition-colors">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-metadata text-metadata text-on-surface-variant uppercase tracking-wider">Clinical Efficiency</h3>
+<span class="material-symbols-outlined text-outline text-[18px]">speed</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-stat-value text-stat-value text-on-surface">92%</span>
+<span class="font-micro text-micro text-status-info-text bg-status-info-bg px-1.5 py-0.5 rounded-full">Target: &gt;90%</span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full mt-3 overflow-hidden">
+<div class="bg-primary h-full rounded-full w-[92%]"></div>
+</div>
+</div>
+<!-- KPI 4 -->
+<div class="bg-surface rounded-xl border-[0.5px] border-outline-variant p-card-py px-card-px hover:border-primary/30 transition-colors">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-metadata text-metadata text-on-surface-variant uppercase tracking-wider">Patient Satisfaction</h3>
+<span class="material-symbols-outlined text-outline text-[18px]">sentiment_satisfied</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-stat-value text-stat-value text-on-surface">4.8</span>
+<span class="font-body text-body text-outline">/ 5.0</span>
+</div>
+<div class="flex gap-1 mt-1 text-status-pending-text">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px]">star_half</span>
+</div>
+</div>
+</div>
+<!-- Charts Section (Bento Grid Style) -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-grid-gap">
+<!-- Bar Chart Area -->
+<div class="bg-surface rounded-xl border-[0.5px] border-outline-variant p-card-py px-card-px flex flex-col min-h-[300px]">
+<div class="flex justify-between items-center mb-4">
+<div>
+<h3 class="font-label-badge text-label-badge text-on-surface">Monthly Consultation Volume</h3>
+<p class="font-metadata text-metadata text-outline">Total visits per department</p>
+</div>
+<button class="p-1 rounded hover:bg-surface-container-low text-outline transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+<div class="flex-1 relative rounded-lg border-[0.5px] border-outline-variant border-dashed overflow-hidden bg-surface-container-lowest flex items-center justify-center">
+<!-- Placeholder for chart -->
+<div class="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent"></div>
+<div class="flex items-end justify-around w-full h-[80%] px-4 gap-2 z-10">
+<div class="w-full bg-primary/20 rounded-t-sm h-[40%] hover:bg-primary/40 transition-colors relative group"><span class="absolute -top-6 left-1/2 -translate-x-1/2 font-micro text-micro text-outline opacity-0 group-hover:opacity-100 transition-opacity">IM</span></div>
+<div class="w-full bg-primary/40 rounded-t-sm h-[70%] hover:bg-primary/60 transition-colors relative group"><span class="absolute -top-6 left-1/2 -translate-x-1/2 font-micro text-micro text-outline opacity-0 group-hover:opacity-100 transition-opacity">Cardio</span></div>
+<div class="w-full bg-primary/60 rounded-t-sm h-[50%] hover:bg-primary/80 transition-colors relative group"><span class="absolute -top-6 left-1/2 -translate-x-1/2 font-micro text-micro text-outline opacity-0 group-hover:opacity-100 transition-opacity">Peds</span></div>
+<div class="w-full bg-primary/80 rounded-t-sm h-[90%] hover:bg-primary transition-colors relative group"><span class="absolute -top-6 left-1/2 -translate-x-1/2 font-micro text-micro text-outline opacity-0 group-hover:opacity-100 transition-opacity">Neuro</span></div>
+<div class="w-full bg-primary rounded-t-sm h-[65%] hover:bg-primary/90 transition-colors relative group"><span class="absolute -top-6 left-1/2 -translate-x-1/2 font-micro text-micro text-outline opacity-0 group-hover:opacity-100 transition-opacity">Ortho</span></div>
+</div>
+</div>
+</div>
+<!-- Line Chart Area -->
+<div class="bg-surface rounded-xl border-[0.5px] border-outline-variant p-card-py px-card-px flex flex-col min-h-[300px]">
+<div class="flex justify-between items-center mb-4">
+<div>
+<h3 class="font-label-badge text-label-badge text-on-surface">Average Wait Time Trend</h3>
+<p class="font-metadata text-metadata text-outline">Minutes from check-in to consult</p>
+</div>
+<button class="p-1 rounded hover:bg-surface-container-low text-outline transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+<div class="flex-1 relative rounded-lg border-[0.5px] border-outline-variant border-dashed overflow-hidden bg-surface-container-lowest flex items-center justify-center">
+<!-- Placeholder for line chart -->
+<svg class="w-full h-full text-primary/30" preserveAspectRatio="none" viewBox="0 0 100 100">
+<path class="opacity-50" d="M0,80 Q20,60 40,75 T80,40 T100,20" fill="none" stroke="currentColor" stroke-width="2"></path>
+<path class="stroke-primary" d="M0,90 Q20,70 40,85 T80,50 T100,30" fill="none" stroke-width="3"></path>
+<circle class="fill-primary" cx="40" cy="85" r="2"></circle>
+<circle class="fill-primary" cx="80" cy="50" r="2"></circle>
+</svg>
+</div>
+</div>
+</div>
+<!-- Data Table -->
+<div class="bg-surface rounded-xl border-[0.5px] border-outline-variant overflow-hidden">
+<div class="p-4 border-b-[0.5px] border-outline-variant flex justify-between items-center bg-surface-container-lowest">
+<h3 class="font-label-badge text-label-badge text-on-surface">Staff Performance Roster</h3>
+<div class="flex gap-2">
+<button class="border-[0.5px] border-outline-variant px-3 py-1.5 rounded-lg font-ui-small text-ui-small text-on-surface hover:bg-surface-container-low transition-colors flex items-center gap-1 scale-95 active:scale-98">
+<span class="material-symbols-outlined text-[16px]">download</span>
+                                Export
+                            </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b-[0.5px] border-outline-variant">
+<th class="py-2.5 px-4 font-metadata text-metadata text-on-surface-variant uppercase tracking-wider whitespace-nowrap">Staff Member</th>
+<th class="py-2.5 px-4 font-metadata text-metadata text-on-surface-variant uppercase tracking-wider whitespace-nowrap">Role / Dept</th>
+<th class="py-2.5 px-4 font-metadata text-metadata text-on-surface-variant uppercase tracking-wider whitespace-nowrap text-right">Consultations</th>
+<th class="py-2.5 px-4 font-metadata text-metadata text-on-surface-variant uppercase tracking-wider whitespace-nowrap text-right">Avg Duration</th>
+<th class="py-2.5 px-4 font-metadata text-metadata text-on-surface-variant uppercase tracking-wider whitespace-nowrap text-center">Patient Rating</th>
+<th class="py-2.5 px-4 font-metadata text-metadata text-on-surface-variant uppercase tracking-wider whitespace-nowrap">Efficiency Score</th>
+<th class="py-2.5 px-4 font-metadata text-metadata text-on-surface-variant uppercase tracking-wider whitespace-nowrap w-10"></th>
+</tr>
+</thead>
+<tbody class="divide-y-[0.5px] divide-outline-variant bg-surface">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="py-3 px-4">
+<div class="flex items-center gap-3">
+<img class="w-8 h-8 rounded-full object-cover border-[0.5px] border-outline-variant" data-alt="Professional headshot of a male doctor in a white coat, neutral background, bright clinical lighting, modern portrait style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnUE5EnJ4FDX0qJkTLd9HV_Un-YeXVCZ1NxPYOWSLUAzk7qZbF9EgHquvZmO4Q4IG2X01WgV4shHP9GKpt0LhlHNQb9CE5qqF1smMJZepMfav0yTIyYRTARnEFxnB0NjusItFEaMNJpvh8p4SrvH4NYZY4tHTGqAs4Qn3iFK_lGVMgd-Ti7sr-y-rgVoAsh0xwKna0h1U42mE-JSae5YhjZyDLLrGBYt6RvSHiH4WitNBErioD6m2ftHqxbYBbmClrhSuuQUVRfiQ">
+<div>
+<p class="font-ui-small text-ui-small text-on-surface font-medium">Dr. Eduardo Santos</p>
+<p class="font-metadata text-metadata text-outline">ID: MS-8921</p>
+</div>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="inline-block bg-brand-muted text-primary-container px-2 py-0.5 rounded text-micro font-micro border-[0.5px] border-primary/20">Internal Med</span>
+</td>
+<td class="py-3 px-4 font-mono text-mono text-on-surface text-right">
+                                        342
+                                    </td>
+<td class="py-3 px-4 font-mono text-mono text-on-surface text-right">
+                                        18m
+                                    </td>
+<td class="py-3 px-4 text-center">
+<div class="inline-flex items-center gap-1 bg-surface-container-high px-2 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-[12px] text-status-pending-text" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-ui-small text-ui-small font-medium">4.9</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<div class="flex-1 bg-surface-container-high h-1.5 rounded-full overflow-hidden w-16">
+<div class="bg-status-confirmed-text h-full w-[95%]"></div>
+</div>
+<span class="font-mono text-mono text-status-confirmed-text font-medium">95%</span>
+</div>
+</td>
+<td class="py-3 px-4 text-right">
+<button class="text-outline hover:text-primary transition-colors opacity-0 group-hover:opacity-100">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="py-3 px-4">
+<div class="flex items-center gap-3">
+<img class="w-8 h-8 rounded-full object-cover border-[0.5px] border-outline-variant" data-alt="Professional headshot of an Asian female doctor wearing a stethoscope, neutral background, bright clinical lighting, modern portrait style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuANxTWiwmvxA8gwXkKtmoHWi8aUt6jK9xDM1BVFXRblUWgO4TcwvOAPnQWLeA4q2-exij8W_qRtrp54e1J2QUvB0Ffv416683BaHrk4T-b6ieg7idL4aoshS-kXkIKghCQRXoHvBAj2csSlGnOC22vEjvwIUbHAVYGFf-BsRM-S-z7SGNW3fYEu5FghbtR9Ovo4yAIyAKwe8tZLezWWhUPjCxsxqI8dZvrPMgvM5U7WoYrMuuzxq-2wChmLLImmQ0CaqGU_gfF6-lE">
+<div>
+<p class="font-ui-small text-ui-small text-on-surface font-medium">Dr. Julia Lim</p>
+<p class="font-metadata text-metadata text-outline">ID: MS-4390</p>
+</div>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="inline-block bg-brand-muted text-primary-container px-2 py-0.5 rounded text-micro font-micro border-[0.5px] border-primary/20">Cardiology</span>
+</td>
+<td class="py-3 px-4 font-mono text-mono text-on-surface text-right">
+                                        218
+                                    </td>
+<td class="py-3 px-4 font-mono text-mono text-on-surface text-right">
+                                        24m
+                                    </td>
+<td class="py-3 px-4 text-center">
+<div class="inline-flex items-center gap-1 bg-surface-container-high px-2 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-[12px] text-status-pending-text" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-ui-small text-ui-small font-medium">4.8</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<div class="flex-1 bg-surface-container-high h-1.5 rounded-full overflow-hidden w-16">
+<div class="bg-primary h-full w-[88%]"></div>
+</div>
+<span class="font-mono text-mono text-on-surface font-medium">88%</span>
+</div>
+</td>
+<td class="py-3 px-4 text-right">
+<button class="text-outline hover:text-primary transition-colors opacity-0 group-hover:opacity-100">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="py-3 px-4">
+<div class="flex items-center gap-3">
+<img class="w-8 h-8 rounded-full object-cover border-[0.5px] border-outline-variant" data-alt="Professional headshot of a Hispanic male pediatrician smiling slightly, neutral background, bright clinical lighting, approachable modern portrait style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzk019g0cZ88yGFv0Yy9bUroaL620GSGO8_z3GwCzmvUkBvD6WHrNIlivEfJ3o_ICuB8zCOht4faOxMSKNgBLSmAcB2CwsnUAQ3nDprnRFd4XTYdRfMUI4eiy3xXAGkWS3VqAeU7VseMnA8vcZxXdGwybReZova07vVR2rmoHMcce86NtGdAkFs-vOVz4xJIH7TMpDJ7Ofhkqza-Rsm7_N76lJMZp1f1Muj4vkRI0J3pPQKwayj3RvZE3HTlZxJEL0CJx2Cr8FwWA">
+<div>
+<p class="font-ui-small text-ui-small text-on-surface font-medium">Dr. Roberto Garcia</p>
+<p class="font-metadata text-metadata text-outline">ID: MS-7721</p>
+</div>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="inline-block bg-brand-muted text-primary-container px-2 py-0.5 rounded text-micro font-micro border-[0.5px] border-primary/20">Pediatrics</span>
+</td>
+<td class="py-3 px-4 font-mono text-mono text-on-surface text-right">
+                                        412
+                                    </td>
+<td class="py-3 px-4 font-mono text-mono text-on-surface text-right">
+                                        15m
+                                    </td>
+<td class="py-3 px-4 text-center">
+<div class="inline-flex items-center gap-1 bg-surface-container-high px-2 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-[12px] text-status-pending-text" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-ui-small text-ui-small font-medium">5.0</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<div class="flex-1 bg-surface-container-high h-1.5 rounded-full overflow-hidden w-16">
+<div class="bg-status-confirmed-text h-full w-[98%]"></div>
+</div>
+<span class="font-mono text-mono text-status-confirmed-text font-medium">98%</span>
+</div>
+</td>
+<td class="py-3 px-4 text-right">
+<button class="text-outline hover:text-primary transition-colors opacity-0 group-hover:opacity-100">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="py-3 px-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-ui-small font-bold border-[0.5px] border-outline-variant">
+                                                JM
+                                            </div>
+<div>
+<p class="font-ui-small text-ui-small text-on-surface font-medium">Jordan Miller</p>
+<p class="font-metadata text-metadata text-outline">ID: NR-1102</p>
+</div>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="inline-block bg-surface-container-highest text-on-surface px-2 py-0.5 rounded text-micro font-micro border-[0.5px] border-outline-variant">Nurse/Triage</span>
+</td>
+<td class="py-3 px-4 font-mono text-mono text-on-surface text-right">
+                                        856
+                                    </td>
+<td class="py-3 px-4 font-mono text-mono text-on-surface text-right">
+                                        8m
+                                    </td>
+<td class="py-3 px-4 text-center">
+<div class="inline-flex items-center gap-1 bg-surface-container-high px-2 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-[12px] text-status-pending-text" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-ui-small text-ui-small font-medium">4.7</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<div class="flex-1 bg-surface-container-high h-1.5 rounded-full overflow-hidden w-16">
+<div class="bg-status-cancelled-text h-full w-[78%]"></div>
+</div>
+<span class="font-mono text-mono text-status-cancelled-text font-medium">78%</span>
+</div>
+</td>
+<td class="py-3 px-4 text-right">
+<button class="text-outline hover:text-primary transition-colors opacity-0 group-hover:opacity-100">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-3 border-t-[0.5px] border-outline-variant flex justify-center bg-surface-container-lowest">
+<button class="text-primary font-ui-small text-ui-small hover:underline">View All Staff</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
