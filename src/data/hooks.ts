@@ -24,10 +24,26 @@ export function useCustomers() {
   })
 }
 
+export function useCustomer(id: string) {
+  return useQuery({
+    queryKey: queryKeys.customer(id),
+    queryFn: () => customerService.getById(id),
+    enabled: Boolean(id),
+  })
+}
+
 export function useStaff() {
   return useQuery({
     queryKey: queryKeys.staff,
     queryFn: () => staffService.list(),
+  })
+}
+
+export function useStaffMember(id: string) {
+  return useQuery({
+    queryKey: queryKeys.staffMember(id),
+    queryFn: () => staffService.getById(id),
+    enabled: Boolean(id),
   })
 }
 

@@ -34,6 +34,7 @@ export interface AvailabilityResult {
 export interface BookingFilters {
   status?: BookingStatus
   staffId?: string
+  customerId?: string
   resourceId?: string
   /** Inclusive ISO date-time lower bound (by startAt). */
   from?: string
@@ -92,6 +93,8 @@ export const bookingService = {
     if (filters.status) rows = rows.filter((b) => b.status === filters.status)
     if (filters.staffId)
       rows = rows.filter((b) => b.staffId === filters.staffId)
+    if (filters.customerId)
+      rows = rows.filter((b) => b.customerId === filters.customerId)
     if (filters.resourceId) {
       rows = rows.filter((b) => b.resourceIds.includes(filters.resourceId!))
     }
