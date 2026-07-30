@@ -16,6 +16,7 @@ import {
 import { useCustomers } from '@/data/hooks'
 import type { Customer } from '@/data/types'
 import { formatDate } from '@/lib/format'
+import { rowActivation } from '@/lib/interactions'
 
 function filterCustomers(list: Customer[], query: string): Customer[] {
   const q = query.trim().toLowerCase()
@@ -79,7 +80,7 @@ export function CustomersPage() {
                       <Tr
                         key={c.id}
                         className="cursor-pointer"
-                        onClick={() => navigate(`/customers/${c.id}`)}
+                        {...rowActivation(() => navigate(`/customers/${c.id}`))}
                       >
                         <Td>
                           <div className="flex items-center gap-2">

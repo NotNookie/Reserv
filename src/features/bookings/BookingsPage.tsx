@@ -20,6 +20,7 @@ import type { BookingFilters } from '@/data/services'
 import { BOOKING_STATUSES, type BookingStatus } from '@/data/types'
 import { BOOKING_STATUS_META } from '@/data/status'
 import { formatDate, formatTimeRange } from '@/lib/format'
+import { rowActivation } from '@/lib/interactions'
 import { BookingStatusBadge } from './components/BookingStatusBadge'
 import { BookingFormModal } from './components/BookingFormModal'
 
@@ -134,7 +135,7 @@ export function BookingsPage() {
                     <Tr
                       key={b.id}
                       className="cursor-pointer"
-                      onClick={() => navigate(`/bookings/${b.id}`)}
+                      {...rowActivation(() => navigate(`/bookings/${b.id}`))}
                     >
                       <Td className="whitespace-nowrap">
                         <div className="font-medium text-foreground">

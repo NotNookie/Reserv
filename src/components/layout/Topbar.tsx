@@ -15,8 +15,8 @@ export function Topbar({
   const { theme, toggleTheme } = useTheme()
 
   return (
-    <header className="flex shrink-0 items-center justify-between border-b border-border bg-surface px-4 py-2.5 md:px-5">
-      <div className="flex items-center gap-2">
+    <header className="flex shrink-0 items-center justify-between gap-2 border-b border-border bg-surface px-4 py-2.5 md:px-5">
+      <div className="flex min-w-0 items-center gap-2">
         {/* Collapse toggle (desktop) */}
         <button
           type="button"
@@ -35,7 +35,9 @@ export function Topbar({
         >
           <Icon name="menu" className="text-[20px]" />
         </button>
-        <h1 className="text-[15px] font-semibold text-foreground">{title}</h1>
+        <h1 className="truncate text-[15px] font-semibold text-foreground">
+          {title}
+        </h1>
       </div>
 
       <div className="flex items-center gap-1.5">
