@@ -104,3 +104,39 @@ export type UpdateBookingInput = Partial<CreateBookingInput> & {
   checkInAt?: string
   checkOutAt?: string
 }
+
+/* ------------------------------- Billing -------------------------------- */
+
+export type InvoiceStatus = 'unpaid' | 'paid' | 'refunded' | 'void'
+
+export const INVOICE_STATUSES: InvoiceStatus[] = [
+  'unpaid',
+  'paid',
+  'refunded',
+  'void',
+]
+
+export type PaymentMethod = 'card' | 'cash' | 'transfer'
+
+export const PAYMENT_METHODS: PaymentMethod[] = ['card', 'cash', 'transfer']
+
+export interface Invoice {
+  id: ID
+  /** Human-readable invoice number, e.g. "INV-1001". */
+  number: string
+  bookingId: ID
+  customerId: ID
+  /** Amount due in whole currency units (USD). */
+  amount: number
+  status: InvoiceStatus
+  issuedAt: string
+  paidAt?: string
+  method?: PaymentMethod
+}
+
+/** An invoice with its related entities resolved, for display. */
+export interface InvoiceWithRelations extends Invoice {
+  customer: Customer
+  booking: Booking
+  service: Service
+}

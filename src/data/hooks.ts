@@ -3,14 +3,17 @@ import { queryKeys } from './queryKeys'
 import {
   bookingService,
   customerService,
+  invoiceService,
   resourceService,
   serviceCatalog,
   staffService,
   type BookingFilters,
+  type InvoiceFilters,
 } from './services'
 import type {
   BookingStatus,
   CreateBookingInput,
+  PaymentMethod,
   ResourceStatus,
   UpdateBookingInput,
 } from './types'
@@ -122,5 +125,36 @@ export function useUpdateResourceStatus() {
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: queryKeys.resources })
     },
+  })
+}
+
+/* ---------------------------- Invoice queries ---------------------------- */
+
+export function useInvoices(filters?: InvoiceFilters) {
+  return useQuery({
+    queryKey: queryKeys.invoices(filters),
+    queryFn: () => invoiceService.list(filters),
+  })
+}
+
+function useInvalidateInvoices() {
+  const qc = useQueryClient()
+  return () => qc.invalidateQueries({ queryKey: ['invoices'] })
+}
+
+export function useMarkInvoicePaid() {
+  const invalidate = useInvalidateInvoices()
+  return useMutation({
+    mutationFn: (args: { id: string; method: PaymentMethod }) =>
+      invoiceService.markPaid(args.id, args.method),
+    onSuccess: () => void invalidate(),
+  })
+}
+
+export function useRefundInvoice() {
+  const invalidate = useInvalidateInvoices()
+  return useMutation({
+    mutationFn: (id: string) => invoiceService.refund(id),
+    onSuccess: () => void invalidate(),
   })
 }

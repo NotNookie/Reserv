@@ -9,3 +9,4 @@ export {
   type AvailabilityQuery,
   type AvailabilityResult,
 } from './bookingService'
+export { invoiceService, type InvoiceFilters } from './invoiceService'

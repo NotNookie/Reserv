@@ -1,5 +1,5 @@
 import type { BadgeTone } from '@/components/ui'
-import type { BookingStatus, ResourceStatus } from './types'
+import type { BookingStatus, InvoiceStatus, ResourceStatus } from './types'
 
 interface StatusMeta {
   label: string
@@ -19,4 +19,11 @@ export const RESOURCE_STATUS_META: Record<ResourceStatus, StatusMeta> = {
   available: { label: 'Available', tone: 'confirmed' },
   occupied: { label: 'Occupied', tone: 'pending' },
   maintenance: { label: 'Maintenance', tone: 'neutral' },
+}
+
+export const INVOICE_STATUS_META: Record<InvoiceStatus, StatusMeta> = {
+  unpaid: { label: 'Unpaid', tone: 'pending' },
+  paid: { label: 'Paid', tone: 'confirmed' },
+  refunded: { label: 'Refunded', tone: 'purple' },
+  void: { label: 'Void', tone: 'neutral' },
 }

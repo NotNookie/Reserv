@@ -2,6 +2,9 @@ import type {
   Booking,
   BookingStatus,
   Customer,
+  Invoice,
+  InvoiceStatus,
+  PaymentMethod,
   Resource,
   Service,
   Staff,
@@ -13,6 +16,7 @@ export interface SeedData {
   resources: Resource[]
   services: Service[]
   bookings: Booking[]
+  invoices: Invoice[]
 }
 
 const CUSTOMER_NAMES = [
@@ -248,5 +252,41 @@ export function createSeedData(): SeedData {
     })
   }
 
-  return { customers, staff, resources, services, bookings }
+  const invoices = buildInvoices(bookings, services)
+
+  return { customers, staff, resources, services, bookings, invoices }
+}
+
+const PAYMENT_ROTATION: PaymentMethod[] = ['card', 'cash', 'transfer']
+
+/** One invoice per billable booking (cancelled bookings are not invoiced). */
+function buildInvoices(bookings: Booking[], services: Service[]): Invoice[] {
+  const invoices: Invoice[] = []
+  let seq = 1000
+  for (const booking of bookings) {
+    if (booking.status === 'cancelled') continue
+    const service = services.find((s) => s.id === booking.serviceId)
+    if (!service) continue
+
+    let status: InvoiceStatus = 'unpaid'
+    if (booking.status === 'completed') status = 'paid'
+    else if (booking.status === 'no_show') status = 'void'
+
+    seq++
+    const invoice: Invoice = {
+      id: `inv${seq}`,
+      number: `INV-${seq}`,
+      bookingId: booking.id,
+      customerId: booking.customerId,
+      amount: service.price,
+      status,
+      issuedAt: booking.startAt,
+    }
+    if (status === 'paid') {
+      invoice.paidAt = booking.checkOutAt ?? booking.endAt
+      invoice.method = PAYMENT_ROTATION[seq % PAYMENT_ROTATION.length]!
+    }
+    invoices.push(invoice)
+  }
+  return invoices
 }
