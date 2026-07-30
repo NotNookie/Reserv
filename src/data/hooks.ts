@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from './queryKeys'
 import {
+  analyticsService,
   bookingService,
   customerService,
   invoiceService,
@@ -156,5 +157,14 @@ export function useRefundInvoice() {
   return useMutation({
     mutationFn: (id: string) => invoiceService.refund(id),
     onSuccess: () => void invalidate(),
+  })
+}
+
+/* --------------------------- Analytics queries --------------------------- */
+
+export function useAnalytics(days = 7) {
+  return useQuery({
+    queryKey: queryKeys.analytics(days),
+    queryFn: () => analyticsService.overview(days),
   })
 }

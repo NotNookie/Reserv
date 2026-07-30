@@ -15,4 +15,5 @@ export const queryKeys = {
   invoices: (filters?: InvoiceFilters) =>
     ['invoices', 'list', filters ?? {}] as const,
   invoice: (id: string) => ['invoices', 'detail', id] as const,
+  analytics: (days: number) => ['analytics', 'overview', days] as const,
 }

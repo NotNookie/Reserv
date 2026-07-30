@@ -10,3 +10,10 @@ export {
   type AvailabilityResult,
 } from './bookingService'
 export { invoiceService, type InvoiceFilters } from './invoiceService'
+export {
+  analyticsService,
+  type AnalyticsOverview,
+  type DayPoint,
+  type StatusSlice,
+  type NamedCount,
+} from './analyticsService'
